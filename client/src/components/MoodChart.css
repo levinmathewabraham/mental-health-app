@@ -1,0 +1,13 @@
+.summary {
+    margin-bottom: 20px;
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .summary h3 {
+    margin-bottom: 10px;
+  }
+  .summary p {
+    margin: 5px 0;
+  }
+  

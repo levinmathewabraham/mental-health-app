@@ -1,0 +1,77 @@
+/* Navbar.css */
+
+/* General Navbar styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3a4a8b; /* Dark blue background */
+    color: white;
+    padding: 10px 20px;
+    font-family: "Arial", sans-serif;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  /* Logo styling */
+  .navbar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+  }
+  
+  /* Navigation links container */
+  .nav-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  /* Individual navigation links */
+  .nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    color: #d9d9f0; /* Light gray on hover */
+  }
+  
+  /* Login/Register button */
+  .nav-button {
+    background-color: #f2a365; /* Orange */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .nav-button:hover {
+    background-color: #d98249; /* Darker orange on hover */
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .nav-links {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .navbar {
+      flex-wrap: wrap;
+    }
+  
+    .nav-button {
+      padding: 10px 20px;
+    }
+  }
+  
