@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./MoodLogger.css";
 
 function MoodLogger() {
-  const [mood, setMood] = useState("Happy");
-  const [energy, setEnergy] = useState(3);
-  const [stress, setStress] = useState(2);
+  const [mood, setMood] = useState(2); // Default value at Neutral
+  const [energy, setEnergy] = useState(1);
+  const [stress, setStress] = useState(1);
   const userId = JSON.parse(localStorage.getItem("user"))._id;
 
   const handleSubmit = async (e) => {
@@ -24,31 +25,58 @@ function MoodLogger() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Log Your Mood</h2>
-      <label>Mood:</label>
-      <select value={mood} onChange={(e) => setMood(e.target.value)}>
-        <option value="Happy">😊 Happy</option>
-        <option value="Neutral">😐 Neutral</option>
-        <option value="Sad">😢 Sad</option>
-      </select>
-      <label>Energy Level (1–5):</label>
-      <input
-        type="range"
-        min="1"
-        max="5"
-        value={energy}
-        onChange={(e) => setEnergy(Number(e.target.value))}
-      />
-      <label>Stress Level (1–5):</label>
-      <input
-        type="range"
-        min="1"
-        max="5"
-        value={stress}
-        onChange={(e) => setStress(Number(e.target.value))}
-      />
-      <button type="submit">Log Mood</button>
+    <form className="mood-logger-form" onSubmit={handleSubmit}>
+      <div className="slider-group">
+        <label htmlFor="mood-slider" className="slider-label">Mood:</label>
+        <input
+          id="mood-slider"
+          type="range"
+          min="1"
+          max="3"
+          value={mood}
+          className="slider"
+          onChange={(e) => setMood(Number(e.target.value))}
+        />
+        <div className="slider-scale">
+          <span>😢 Sad</span>
+          <span>😐 Neutral</span>
+          <span>😊 Happy</span>
+        </div>
+      </div>
+
+      <div className="slider-group">
+        <label htmlFor="energy-slider" className="slider-label">
+          Energy Level (1–5):
+        </label>
+        <input
+          id="energy-slider"
+          type="range"
+          min="1"
+          max="5"
+          value={energy}
+          className="slider"
+          onChange={(e) => setEnergy(Number(e.target.value))}
+        />
+      </div>
+
+      <div className="slider-group">
+        <label htmlFor="stress-slider" className="slider-label">
+          Stress Level (1–5):
+        </label>
+        <input
+          id="stress-slider"
+          type="range"
+          min="1"
+          max="5"
+          value={stress}
+          className="slider"
+          onChange={(e) => setStress(Number(e.target.value))}
+        />
+      </div>
+
+      <button type="submit" className="submit-btn">
+        Log Mood
+      </button>
     </form>
   );
 }

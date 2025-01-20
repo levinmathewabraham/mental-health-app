@@ -18,6 +18,9 @@ const notificationSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isEmailed: {
+    type: Boolean, default: false
+  },
 });
 
 module.exports = mongoose.model("Notification", notificationSchema);

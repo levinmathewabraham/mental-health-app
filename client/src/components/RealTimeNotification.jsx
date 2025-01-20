@@ -1,22 +1,34 @@
+import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import React, { useEffect } from "react";
+import "./RealTimeNotification.css"; // Optional: Add custom styles
 
-const socket = io("http://localhost:5000"); // Replace with your backend server URL
+const socket = io("http://localhost:5000", { withCredentials: true });
 
-const RealTimeNotification = () => {
+function RealTimeNotification() {
+  const [notifications, setNotifications] = useState([]);
+
   useEffect(() => {
-    // Listen for the "notification" event from the server
-    socket.on("notification", (message) => {
-      alert(message); // Show the notification (simple alert for now)
+    // Listen for 'notification' events
+    socket.on("notification", (data) => {
+      const notificationMessage = typeof data === "object" ? data.message : data; // Extract message
+      setNotifications((prev) => [...prev, notificationMessage]);
     });
 
-    // Clean up the listener on unmount
+    // Clean up on unmount
     return () => {
       socket.off("notification");
     };
   }, []);
 
-  return null; // This component doesn't render UI; it just handles WebSocket logic
-};
+  return (
+    <div className="real-time-notification">
+      {notifications.map((notification, index) => (
+        <div key={index} className="notification-toast">
+          {notification}
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default RealTimeNotification;

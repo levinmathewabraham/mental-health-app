@@ -1,0 +1,44 @@
+.mood-logger-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .slider-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .slider-label {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .slider {
+    width: 100%;
+    cursor: pointer;
+  }
+  
+  .slider-scale {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 5px;
+    font-size: 0.9rem;
+  }
+  
+  .submit-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .submit-btn:hover {
+    background-color: #45a049;
+  }
+  

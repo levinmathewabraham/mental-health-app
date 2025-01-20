@@ -6,7 +6,7 @@ import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import ProtectedRoute from './components/ProtectedRoute';
 import RealTimeNotification from "./components/RealTimeNotification";
-import DepressionPredictor from './components/DepressionPredictor';
+import DepressionPrediction from './components/DepressionPrediction';
 import './App.css';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/dashboard/predictor" element={<DepressionPredictor />} />
+          <Route path="/dashboard/predictor" element={<DepressionPrediction />} />
           {/* Add other routes here, e.g., Dashboard */}
           <Route path="/" element={<Login />} /> {/* Default route */}
         </Routes>

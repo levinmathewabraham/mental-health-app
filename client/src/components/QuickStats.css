@@ -1,0 +1,26 @@
+.quick-stats {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .stats-card {
+    flex: 1;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .stats-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #4caf50;
+  }
+  
+  .stats-card p {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  

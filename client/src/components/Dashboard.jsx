@@ -1,12 +1,14 @@
-// Dashboard.jsx
 import React, { useEffect, useState } from "react";
-import { useNavigate, Outlet, Route, Routes } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import DepressionPredictor from "./DepressionPredictor";
+import Sidebar from "../components/Sidebar";
 import MoodLogger from "../components/MoodLogger";
 import MoodChart from "../components/MoodChart";
-import StudyLifestyleRecommendations from "./StudyLifestyleRecommendations";
+import DepressionPrediction from "../components/DepressionPrediction";
+import Notifications from "../components/Notifications";
+import Recommendations from "../components/Recommendations";
+import QuickStats from "../components/QuickStats";
 import "./Dashboard.css";
 
 function Dashboard() {
@@ -26,8 +28,9 @@ function Dashboard() {
 
     const fetchMoodData = async () => {
       try {
-        const userId = parsedUser._id;
-        const response = await axios.get(`http://localhost:5000/api/mood/${userId}`);
+        const response = await axios.get(
+          `http://localhost:5000/api/mood/${parsedUser._id}`
+        );
         setMoodData(response.data);
       } catch (error) {
         console.error("Failed to fetch mood data:", error);
@@ -37,33 +40,53 @@ function Dashboard() {
     fetchMoodData();
   }, [navigate]);
 
-  const userData = {
-    sleep_duration: 5,
-    work_study_hours: 3,
-    academic_pressure: 8,
-    depression_risk: "High",
-  };
-
   return (
     <div className="dashboard">
       <Navbar />
-      <main>
-        <h1>Welcome to MoodSync Dashboard</h1>
-        <p>Hello, {username}! Here's your latest mood data and insights.</p>
-        <Outlet />
-        <Routes>
-          <Route path="/dashboard/predictor" element={<DepressionPredictor />} />
-          {/* Add more routes as needed */}
-        </Routes>
-        <StudyLifestyleRecommendations userData={userData} />
-        <div className="mood-logger-section">
-          <MoodLogger />
-        </div>
-        <div className="mood-chart-section">
-          <h2>Your Mood Trends</h2>
-          <MoodChart data={moodData} />
-        </div>
-      </main>
+      <div className="dashboard-layout">
+        <Sidebar username={username} />
+        <main className="dashboard-content">
+          <div className="dashboard-header">
+            <h1>Welcome, {username}</h1>
+          </div>
+
+          {/* Quick Stats Section */}
+          <QuickStats moodData={moodData} />
+
+          {/* Main Sections */}
+          <div className="dashboard-sections">
+            {/* Mood Logger */}
+            <section className="dashboard-card">
+              <h2>Log Your Mood</h2>
+              <MoodLogger />
+            </section>
+
+            {/* Mood Trends */}
+            <section className="dashboard-card">
+              <h2>Mood Trends</h2>
+              <MoodChart data={moodData} />
+            </section>
+
+            {/* Depression Prediction */}
+            <section className="dashboard-card">
+              <h2>Depression Risk Predictor</h2>
+              <DepressionPrediction />
+            </section>
+          </div>
+
+          {/* Recommendations & Notifications */}
+          <div className="dashboard-sections">
+            <section className="dashboard-card">
+              <h2>Daily Recommendations</h2>
+              <Recommendations />
+            </section>
+            <section className="dashboard-card">
+              <h2>Notifications</h2>
+              <Notifications />
+            </section>
+          </div>
+        </main>
+      </div>
     </div>
   );
 }
