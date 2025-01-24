@@ -54,14 +54,14 @@ function MoodChart({ data }) {
         tension: 0.1,
       },
       {
-        label: 'Energy Levels Over Time',
+        label: 'Energy Over Time',
         data: data.map((log) => log.energy),
         fill: false,
         borderColor: '#FFC107',
         tension: 0.1,
       },
       {
-        label: 'Stress Levels Over Time',
+        label: 'Stress Over Time',
         data: data.map((log) => log.stress),
         fill: false,
         borderColor: '#F44336',

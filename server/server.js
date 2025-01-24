@@ -4,14 +4,13 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const axios = require('axios');
 const cors = require('cors');
+const nodemailer = require('nodemailer');
+const cron = require('node-cron');
 const http = require('http');
 const { Server } = require('socket.io');
 const User = require('./models/User'); // Ensure User model is available
 const authRoutes = require('./routes/auth');
 const moodRoutes = require('./routes/mood');
-const recommendationRoutes = require('./routes/recommendation');
-const nodemailer = require('nodemailer');
-const cron = require('node-cron');
 const Notification = require('./models/Notification');
 
 const app = express();
@@ -40,10 +39,7 @@ app.use(
 );
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection failed:', err));
 
@@ -72,6 +68,27 @@ const transporter = nodemailer.createTransport({
     user: process.env.SMTP_USER, // Your email
     pass: process.env.SMTP_PASSWORD, // Your email password or app-specific password
   },
+});
+
+// Test route to send a test email
+app.get('/test-email', async (req, res) => {
+  try {
+    const testEmail = process.env.SMTP_USER;
+    const testMessage = 'This is a test email from the SMTP setup.';
+
+    const mailOptions = {
+      from: process.env.SMTP_USER,
+      to: testEmail,
+      subject: 'SMTP Email Test',
+      text: testMessage,
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.send('Test email sent successfully!');
+  } catch (error) {
+    console.error('Error sending test email:', error);
+    res.status(500).send('Failed to send test email.');
+  }
 });
 
 // Function to send an email
@@ -129,8 +146,6 @@ io.on('connection', (socket) => {
     console.log('Client disconnected');
   });
 });
-
-app.use('/api/recommendations', recommendationRoutes);
 
 // Start the server
 server.listen(port, () => {

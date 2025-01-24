@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './DepressionPrediction.css';
 
 const DepressionPrediction = () => {
   const [formData, setFormData] = useState({
-    Gender: 0,
+    Gender: '',
     Age: '',
     AcademicPressure: '',
     WorkPressure: '',
@@ -15,7 +16,7 @@ const DepressionPrediction = () => {
     SuicidalThoughts: '',
     WorkStudyHours: '',
     FinancialStress: '',
-    FamilyHistory: 0,
+    FamilyHistory: '',
   });
 
   const [prediction, setPrediction] = useState(null);
@@ -40,143 +41,47 @@ const DepressionPrediction = () => {
   };
 
   return (
-    <div>
+    <div className="depression-predictor">
+      <h2>Depression Risk Predictor</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Gender (0 for Male, 1 for Female):</label>
-          <input
-            type="number"
-            name="Gender"
-            value={formData.Gender}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Age:</label>
-          <input
-            type="number"
-            name="Age"
-            value={formData.Age}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Academic Pressure:</label>
-          <input
-            type="number"
-            name="AcademicPressure"
-            value={formData.AcademicPressure}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>WorkPressure:</label>
-          <input
-            type="number"
-            name="WorkPressure"
-            value={formData.WorkPressure}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>CGPA:</label>
-          <input
-            type="number"
-            name="CGPA"
-            value={formData.CGPA}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Study Satisfaction:</label>
-          <input
-            type="number"
-            name="StudySatisfaction"
-            value={formData.StudySatisfaction}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Job Satisfaction:</label>
-          <input
-            type="number"
-            name="JobSatisfaction"
-            value={formData.JobSatisfaction}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Sleep Duration:</label>
-          <input
-            type="number"
-            name="SleepDuration"
-            value={formData.SleepDuration}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Dietary Habits:</label>
-          <input
-            type="number"
-            name="DietaryHabits"
-            value={formData.DietaryHabits}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Suicidal Thoughts:</label>
-          <input
-            type="number"
-            name="SuicidalThoughts"
-            value={formData.SuicidalThoughts}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Work/Study Hours:</label>
-          <input
-            type="number"
-            name="WorkStudyHours"
-            value={formData.WorkStudyHours}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Financial Stress:</label>
-          <input
-            type="number"
-            name="FinancialStress"
-            value={formData.FinancialStress}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Family History:</label>
-          <input
-            type="number"
-            name="FamilyHistory"
-            value={formData.FamilyHistory}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        {/* Add similar inputs for all other fields */}
-        <button type="submit">Predict</button>
+        {[
+          { name: 'Gender', placeholder: '0 for Male, 1 for Female' },
+          { name: 'Age', placeholder: 'Enter your age' },
+          { name: 'AcademicPressure', placeholder: '0 (low) - 5 (high)' },
+          { name: 'WorkPressure', placeholder: '0 (low) - 5 (high)' },
+          { name: 'CGPA', placeholder: 'Enter your CGPA (e.g., 7.5)' },
+          { name: 'StudySatisfaction', placeholder: '0 (low) - 5 (high)' },
+          { name: 'JobSatisfaction', placeholder: '0 (low) - 5 (high)' },
+          { name: 'SleepDuration', placeholder: '1 (<5h), 2 (5-6h), 3 (7-8h), 4 (>8h)' },
+          { name: 'DietaryHabits', placeholder: '1 (Healthy), 2 (Moderate), 3 (Healthy)' },
+          { name: 'SuicidalThoughts', placeholder: '1 for Yes, 0 for No' },
+          { name: 'WorkStudyHours', placeholder: 'Enter hours (1-12)' },
+          { name: 'FinancialStress', placeholder: '1 (low) - 5 (high)' },
+          { name: 'FamilyHistory', placeholder: '1 for Yes, 0 for No' },
+        ].map((field) => (
+          <div key={field.name} className="form-group">
+            <label>{field.name.replace(/([A-Z])/g, ' $1')}</label>
+            <input
+              type="number"
+              name={field.name}
+              value={formData[field.name]}
+              onChange={handleChange}
+              placeholder={field.placeholder}
+              required
+            />
+          </div>
+        ))}
+        <button type="submit" className="form-button">Predict</button>
       </form>
       {prediction !== null && (
-        <h2>Depression Risk: {prediction === 1 ? 'High' : 'Low'}</h2>
+        <div className="result">
+          <p>
+            Depression Risk:{' '}
+            <span className={`result-highlight ${prediction === 1 ? 'high-risk' : 'low-risk'}`}>
+              {prediction === 1 ? 'High' : 'Low'}
+            </span>
+          </p>
+        </div>
       )}
     </div>
   );

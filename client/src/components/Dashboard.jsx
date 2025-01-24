@@ -7,7 +7,6 @@ import MoodLogger from "../components/MoodLogger";
 import MoodChart from "../components/MoodChart";
 import DepressionPrediction from "../components/DepressionPrediction";
 import Notifications from "../components/Notifications";
-import Recommendations from "../components/Recommendations";
 import QuickStats from "../components/QuickStats";
 import "./Dashboard.css";
 
@@ -74,12 +73,7 @@ function Dashboard() {
             </section>
           </div>
 
-          {/* Recommendations & Notifications */}
           <div className="dashboard-sections">
-            <section className="dashboard-card">
-              <h2>Daily Recommendations</h2>
-              <Recommendations />
-            </section>
             <section className="dashboard-card">
               <h2>Notifications</h2>
               <Notifications />
