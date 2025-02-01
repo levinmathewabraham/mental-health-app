@@ -5,7 +5,7 @@ import { Chart as ChartJS, LineElement, PointElement, LinearScale, Title, Toolti
 
 ChartJS.register( LineElement, PointElement, LinearScale, Title,Tooltip, Legend, CategoryScale );
 
-function MoodChart({ data }) {
+function MoodChart({ data, hideCorrelations = false }) {
   const [correlations, setCorrelations] = useState({});
   const userId = JSON.parse(localStorage.getItem("user"))._id;
 
@@ -93,10 +93,16 @@ function MoodChart({ data }) {
           <strong>Total Entries Logged: </strong>
           {data.length}
         </p>
-        <h3>Correlations</h3>
-        <p><strong>Mood & Stress: </strong>{correlations.moodStressCorrelation?.toFixed(2)}</p>
-        <p><strong>Mood & Energy: </strong>{correlations.moodEnergyCorrelation?.toFixed(2)}</p>
-        <p><strong>Energy & Stress: </strong>{correlations.stressEnergyCorrelation?.toFixed(2)}</p>
+        
+        {/* Only show correlations if not hidden */}
+        {!hideCorrelations && (
+          <>
+            <h3>Correlations</h3>
+            <p><strong>Mood & Stress: </strong>{correlations.moodStressCorrelation?.toFixed(2)}</p>
+            <p><strong>Mood & Energy: </strong>{correlations.moodEnergyCorrelation?.toFixed(2)}</p>
+            <p><strong>Energy & Stress: </strong>{correlations.stressEnergyCorrelation?.toFixed(2)}</p>
+          </>
+        )}
       </div>
 
       {/* Render the Line Chart */}

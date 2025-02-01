@@ -5,8 +5,8 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import MoodLogger from "../components/MoodLogger";
 import MoodChart from "../components/MoodChart";
-import DepressionPrediction from "../components/DepressionPrediction";
 import Notifications from "../components/Notifications";
+import RealTimeNotification from "../components/RealTimeNotification";
 import QuickStats from "../components/QuickStats";
 import "./Dashboard.css";
 
@@ -14,6 +14,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const [moodData, setMoodData] = useState([]);
   const [username, setUsername] = useState("");
+  const [correlations, setCorrelations] = useState(null);
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -31,8 +32,14 @@ function Dashboard() {
           `http://localhost:5000/api/mood/${parsedUser._id}`
         );
         setMoodData(response.data);
+
+        // Fetch correlations
+        const correlationsResponse = await axios.get(
+          `http://localhost:5000/api/mood/correlation/${parsedUser._id}`
+        );
+        setCorrelations(correlationsResponse.data);
       } catch (error) {
-        console.error("Failed to fetch mood data:", error);
+        console.error("Failed to fetch data:", error);
       }
     };
 
@@ -42,18 +49,30 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <Navbar />
+      <RealTimeNotification />
       <div className="dashboard-layout">
         <Sidebar username={username} />
         <main className="dashboard-content">
           <div className="dashboard-header">
             <h1>Welcome, {username}</h1>
+            <div className="quick-actions">
+              <button 
+                onClick={() => navigate('/depression-assessment')} 
+                className="assessment-btn"
+              >
+                <i className="fas fa-brain"></i>
+                Take Depression Risk Assessment
+              </button>
+            </div>
           </div>
 
-          {/* Quick Stats Section */}
-          <QuickStats moodData={moodData} />
-
-          {/* Main Sections */}
           <div className="dashboard-sections">
+            {/* Quick Stats Section */}
+            <section className="dashboard-card">
+              <h2>Overview</h2>
+              <QuickStats moodData={moodData} />
+            </section>
+
             {/* Mood Logger */}
             <section className="dashboard-card">
               <h2>Log Your Mood</h2>
@@ -63,17 +82,56 @@ function Dashboard() {
             {/* Mood Trends */}
             <section className="dashboard-card">
               <h2>Mood Trends</h2>
-              <MoodChart data={moodData} />
+              <div className="chart-container">
+                <MoodChart data={moodData} hideCorrelations={true} />
+              </div>
             </section>
 
-            {/* Depression Prediction */}
-            <section className="dashboard-card">
-              <h2>Depression Risk Predictor</h2>
-              <DepressionPrediction />
-            </section>
-          </div>
+            {/* Correlations Card */}
+            <section className="dashboard-card correlations-card">
+              <h2>Pattern Analysis</h2>
+              {correlations && (
+                <div className="correlations-content">
+                  <div className="correlation-item">
+                    <h3>Mood & Stress</h3>
+                    <div className="correlation-value">
+                      {correlations.moodStressCorrelation?.toFixed(2)}
+                    </div>
+                    <p className="correlation-description">
+                      {correlations.moodStressCorrelation < 0 
+                        ? "Your mood tends to decrease with stress"
+                        : "Your mood seems resilient to stress"}
+                    </p>
+                  </div>
 
-          <div className="dashboard-sections">
+                  <div className="correlation-item">
+                    <h3>Mood & Energy</h3>
+                    <div className="correlation-value">
+                      {correlations.moodEnergyCorrelation?.toFixed(2)}
+                    </div>
+                    <p className="correlation-description">
+                      {correlations.moodEnergyCorrelation > 0.5 
+                        ? "Higher energy levels boost your mood"
+                        : "Your mood varies independently of energy"}
+                    </p>
+                  </div>
+
+                  <div className="correlation-item">
+                    <h3>Energy & Stress</h3>
+                    <div className="correlation-value">
+                      {correlations.stressEnergyCorrelation?.toFixed(2)}
+                    </div>
+                    <p className="correlation-description">
+                      {correlations.stressEnergyCorrelation < 0 
+                        ? "Stress tends to drain your energy"
+                        : "Your energy persists despite stress"}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </section>
+
+            {/* Notifications */}
             <section className="dashboard-card">
               <h2>Notifications</h2>
               <Notifications />
