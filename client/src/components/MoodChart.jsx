@@ -33,16 +33,6 @@ function MoodChart({ data, hideCorrelations = false }) {
     data.reduce((acc, log) => acc + log.stress, 0) / data.length
   ).toFixed(1);
 
-  const moodFrequency = data.reduce((acc, log) => {
-    acc[log.mood] = (acc[log.mood] || 0) + 1;
-    return acc;
-  }, {});
-
-  const mostFrequentMood = Object.entries(moodFrequency).reduce(
-    (a, b) => (b[1] > a[1] ? b : a),
-    ['', 0]
-  )[0];
-
   const chartData = {
     labels: data.map((log) => new Date(log.date).toLocaleDateString()),
     datasets: [
@@ -84,14 +74,6 @@ function MoodChart({ data, hideCorrelations = false }) {
         </p>
         <p>
           <strong>Average Stress: </strong>{averageStress}
-        </p>
-        <p>
-          <strong>Most Frequent Mood: </strong>
-          {mostFrequentMood}
-        </p>
-        <p>
-          <strong>Total Entries Logged: </strong>
-          {data.length}
         </p>
         
         {/* Only show correlations if not hidden */}

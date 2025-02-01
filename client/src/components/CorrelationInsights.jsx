@@ -1,49 +1,48 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "./CorrelationInsights.css"; // Optional: Add custom styles here
+import React from "react";
+import "./CorrelationInsights.css";
 
-const CorrelationInsights = ({ userId }) => {
-  const [correlations, setCorrelations] = useState(null);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const fetchCorrelations = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/api/mood/correlation/${userId}`);
-        setCorrelations(response.data);
-      } catch (err) {
-        setError("Failed to fetch correlation data.");
-      }
-    };
-
-    fetchCorrelations();
-  }, [userId]);
-
-  if (error) {
-    return <div className="error">{error}</div>;
-  }
-
+const CorrelationInsights = ({ correlations }) => {
   if (!correlations) {
-    return <div>Loading...</div>;
+    return <div>Loading correlation data...</div>;
   }
 
   return (
-    <div className="correlation-insights">
-      <h3>Correlation Insights</h3>
-      <ul>
-        <li>
-          <strong>Mood-Stress Correlation:</strong>{" "}
-          {correlations.moodStressCorrelation.toFixed(2)}
-        </li>
-        <li>
-          <strong>Mood-Energy Correlation:</strong>{" "}
-          {correlations.moodEnergyCorrelation.toFixed(2)}
-        </li>
-        <li>
-          <strong>Stress-Energy Correlation:</strong>{" "}
-          {correlations.stressEnergyCorrelation.toFixed(2)}
-        </li>
-      </ul>
+    <div className="correlations-content">
+      <div className="correlation-item">
+        <h3>Mood & Stress</h3>
+        <div className="correlation-value">
+          {correlations.moodStressCorrelation?.toFixed(2)}
+        </div>
+        <p className="correlation-description">
+          {correlations.moodStressCorrelation < 0 
+            ? "Your mood tends to decrease with stress"
+            : "Your mood seems resilient to stress"}
+        </p>
+      </div>
+
+      <div className="correlation-item">
+        <h3>Mood & Energy</h3>
+        <div className="correlation-value">
+          {correlations.moodEnergyCorrelation?.toFixed(2)}
+        </div>
+        <p className="correlation-description">
+          {correlations.moodEnergyCorrelation > 0.5 
+            ? "Higher energy levels boost your mood"
+            : "Your mood varies independently of energy"}
+        </p>
+      </div>
+
+      <div className="correlation-item">
+        <h3>Energy & Stress</h3>
+        <div className="correlation-value">
+          {correlations.stressEnergyCorrelation?.toFixed(2)}
+        </div>
+        <p className="correlation-description">
+          {correlations.stressEnergyCorrelation < 0 
+            ? "Stress tends to drain your energy"
+            : "Your energy persists despite stress"}
+        </p>
+      </div>
     </div>
   );
 };

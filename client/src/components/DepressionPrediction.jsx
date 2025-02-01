@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Navbar from './Navbar';
 import './DepressionPrediction.css';
 
 const DepressionPrediction = () => {
@@ -124,122 +125,125 @@ const DepressionPrediction = () => {
   };
 
   return (
-    <div className="depression-predictor">
-      <div className="predictor-header">
-        <h2>Depression Risk Assessment</h2>
-        <p>This tool helps identify potential risk factors for depression. All information is confidential.</p>
-      </div>
+    <div>
+      <Navbar />
+      <div className="depression-predictor">
+        <div className="predictor-header">
+          <h2>Depression Risk Assessment</h2>
+          <p>This tool helps identify potential risk factors for depression. All information is confidential.</p>
+        </div>
 
-      <div className="step-indicator">
-        {[1, 2, 3, 4].map(num => (
-          <div key={num} className={`step ${step >= num ? 'active' : ''}`}>
-            {num}
-          </div>
-        ))}
-      </div>
-
-      <form onSubmit={handleSubmit}>
-        <div className="form-step">
-          {formFields[step - 1].map((field) => (
-            <div key={field.name} className="form-group">
-              <label>{field.label}</label>
-              {field.type === 'select' ? (
-                <select
-                  name={field.name}
-                  value={formData[field.name]}
-                  onChange={handleChange}
-                  required
-                >
-                  {field.options.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              ) : field.type === 'range' ? (
-                <div className="range-input">
-                  <input
-                    type="range"
-                    name={field.name}
-                    min={field.min}
-                    max={field.max}
-                    value={formData[field.name]}
-                    onChange={handleChange}
-                    required
-                  />
-                  <span className="range-value">{formData[field.name]}</span>
-                </div>
-              ) : (
-                <input
-                  type={field.type}
-                  name={field.name}
-                  value={formData[field.name]}
-                  onChange={handleChange}
-                  min={field.min}
-                  max={field.max}
-                  step={field.step}
-                  required
-                />
-              )}
+        <div className="step-indicator">
+          {[1, 2, 3, 4].map(num => (
+            <div key={num} className={`step ${step >= num ? 'active' : ''}`}>
+              {num}
             </div>
           ))}
         </div>
 
-        <div className="form-navigation">
-          {step > 1 && (
-            <button type="button" onClick={prevStep} className="nav-button prev">
-              Previous
-            </button>
-          )}
-          {step < 4 ? (
-            <button type="button" onClick={nextStep} className="nav-button next">
-              Next
-            </button>
-          ) : (
-            <button type="submit" className="nav-button submit" disabled={loading}>
-              {loading ? 'Processing...' : 'Get Results'}
-            </button>
-          )}
-        </div>
-      </form>
-
-      {prediction !== null && (
-        <div className={`result ${prediction === 1 ? 'high-risk' : 'low-risk'}`}>
-          <h3>Assessment Result</h3>
-          <div className="risk-level">
-            <span className="risk-label">Risk Level:</span>
-            <span className="risk-value">{prediction === 1 ? 'High' : 'Low'}</span>
+        <form onSubmit={handleSubmit}>
+          <div className="form-step">
+            {formFields[step - 1].map((field) => (
+              <div key={field.name} className="form-group">
+                <label>{field.label}</label>
+                {field.type === 'select' ? (
+                  <select
+                    name={field.name}
+                    value={formData[field.name]}
+                    onChange={handleChange}
+                    required
+                  >
+                    {field.options.map(option => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                ) : field.type === 'range' ? (
+                  <div className="range-input">
+                    <input
+                      type="range"
+                      name={field.name}
+                      min={field.min}
+                      max={field.max}
+                      value={formData[field.name]}
+                      onChange={handleChange}
+                      required
+                    />
+                    <span className="range-value">{formData[field.name]}</span>
+                  </div>
+                ) : (
+                  <input
+                    type={field.type}
+                    name={field.name}
+                    value={formData[field.name]}
+                    onChange={handleChange}
+                    min={field.min}
+                    max={field.max}
+                    step={field.step}
+                    required
+                  />
+                )}
+              </div>
+            ))}
           </div>
-          <div className="result-message">
-            {prediction === 1 ? (
-              <>
-                <p>Based on your responses, you may be at higher risk for depression.</p>
-                <p>We strongly recommend:</p>
-                <ul>
-                  <li>Consulting with a mental health professional</li>
-                  <li>Talking to someone you trust about your feelings</li>
-                  <li>Contacting a crisis helpline if you need immediate support</li>
-                </ul>
-              </>
+
+          <div className="form-navigation">
+            {step > 1 && (
+              <button type="button" onClick={prevStep} className="nav-button prev">
+                Previous
+              </button>
+            )}
+            {step < 4 ? (
+              <button type="button" onClick={nextStep} className="nav-button next">
+                Next
+              </button>
             ) : (
-              <>
-                <p>Based on your responses, you appear to be at lower risk for depression.</p>
-                <p>Remember to:</p>
-                <ul>
-                  <li>Continue maintaining healthy lifestyle habits</li>
-                  <li>Stay connected with friends and family</li>
-                  <li>Monitor your mental health regularly</li>
-                </ul>
-              </>
+              <button type="submit" className="nav-button submit" disabled={loading}>
+                {loading ? 'Processing...' : 'Get Results'}
+              </button>
             )}
           </div>
-          <div className="emergency-contacts">
-            <p>24/7 Crisis Resources:</p>
-            <p>National Crisis Line: 988</p>
-            <p>Emergency: 911</p>
+        </form>
+
+        {prediction !== null && (
+          <div className={`result ${prediction === 1 ? 'high-risk' : 'low-risk'}`}>
+            <h3>Assessment Result</h3>
+            <div className="risk-level">
+              <span className="risk-label">Risk Level:</span>
+              <span className="risk-value">{prediction === 1 ? 'High' : 'Low'}</span>
+            </div>
+            <div className="result-message">
+              {prediction === 1 ? (
+                <>
+                  <p>Based on your responses, you may be at higher risk for depression.</p>
+                  <p>We strongly recommend:</p>
+                  <ul>
+                    <li>Consulting with a mental health professional</li>
+                    <li>Talking to someone you trust about your feelings</li>
+                    <li>Contacting a crisis helpline if you need immediate support</li>
+                  </ul>
+                </>
+              ) : (
+                <>
+                  <p>Based on your responses, you appear to be at lower risk for depression.</p>
+                  <p>Remember to:</p>
+                  <ul>
+                    <li>Continue maintaining healthy lifestyle habits</li>
+                    <li>Stay connected with friends and family</li>
+                    <li>Monitor your mental health regularly</li>
+                  </ul>
+                </>
+              )}
+            </div>
+            <div className="emergency-contacts">
+              <p>24/7 Crisis Resources:</p>
+              <p>National Crisis Line: 988</p>
+              <p>Emergency: 911</p>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
