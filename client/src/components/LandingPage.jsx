@@ -27,10 +27,6 @@ const LandingPage = () => {
           <h2>Contact Us</h2>
           <p>Got questions? Reach out to our support team at <a href="mailto:support@moodsync.com">support@moodsync.com</a></p>
         </section>
-
-        <footer>
-          <p>&copy; {new Date().getFullYear()} MoodSync. All Rights Reserved.</p>
-        </footer>
       </div>
     </div>
   );

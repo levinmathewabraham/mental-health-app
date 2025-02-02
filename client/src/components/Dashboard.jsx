@@ -5,7 +5,6 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import MoodLogger from "../components/MoodLogger";
 import MoodChart from "../components/MoodChart";
-import Notifications from "../components/Notifications";
 import RealTimeNotification from "../components/RealTimeNotification";
 import QuickStats from "../components/QuickStats";
 import CorrelationInsights from "./CorrelationInsights";
@@ -95,12 +94,6 @@ function Dashboard() {
             <section className="dashboard-card correlations-card">
               <h2>Pattern Analysis</h2>
               <CorrelationInsights correlations={correlations} />
-            </section>
-
-            {/* Notifications */}
-            <section className="dashboard-card">
-              <h2>Notifications</h2>
-              <Notifications limit={5} />
             </section>
           </div>
         </main>

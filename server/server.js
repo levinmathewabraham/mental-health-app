@@ -11,7 +11,6 @@ const { Server } = require('socket.io');
 const User = require('./models/User'); // Ensure User model is available
 const authRoutes = require('./routes/auth');
 const moodRoutes = require('./routes/mood');
-const Notification = require('./models/Notification');
 
 const app = express();
 const port = 5000;
@@ -125,21 +124,9 @@ cron.schedule('0 9 * * *', async () => {
   }
 });
 
-app.get('/api/notifications/:userId', async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const notifications = await Notification.find({ userId, isRead: false });
-    res.json(notifications);
-  } catch (error) {
-    console.error('Error fetching notifications:', error);
-    res.status(500).send('Failed to fetch notifications.');
-  }
-});
-
 //Real-time notifications
 io.on('connection', (socket) => {
   console.log('New client connected');
-
   io.emit("notification", "This is a test notification from the backend!");
 
   socket.on('disconnect', () => {
