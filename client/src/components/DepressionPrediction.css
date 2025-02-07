@@ -238,3 +238,38 @@ body {
   margin-bottom: 1rem;
   border: 1px solid #feb2b2;
 }
+
+.personalized-recommendations {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.recommendation-category {
+  margin-bottom: 20px;
+}
+
+.recommendation-category h5 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+.recommendation-category ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.recommendation-category li {
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.recommendation-category li:before {
+  content: "•";
+  color: #4CAF50;
+  position: absolute;
+  left: 0;
+}

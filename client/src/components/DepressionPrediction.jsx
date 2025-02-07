@@ -83,6 +83,67 @@ const DepressionPrediction = () => {
     }));
   };
 
+  const generatePersonalizedRecommendations = (data) => {
+    const recommendations = [];
+
+    // Sleep-related recommendations
+    if (Number(data.SleepDuration) <= 2) { // Less than 6 hours
+      recommendations.push({
+        category: "Sleep",
+        tips: [
+          "Establish a consistent sleep schedule aiming for 7-8 hours per night",
+          "Avoid screens 1 hour before bedtime"
+        ]
+      });
+    }
+
+    // Academic/Work pressure recommendations
+    if (Number(data.AcademicPressure) >= 4 || Number(data.WorkPressure) >= 4) {
+      recommendations.push({
+        category: "Stress Management",
+        tips: [
+          "Break large tasks into smaller, manageable chunks",
+          "Take regular 10-minute breaks every hour"
+        ]
+      });
+    }
+
+    // Diet-related recommendations
+    if (Number(data.DietaryHabits) === 3) { // Unhealthy
+      recommendations.push({
+        category: "Nutrition",
+        tips: [
+          "Include at least one fruit or vegetable with each meal",
+          "Stay hydrated by drinking water throughout the day"
+        ]
+      });
+    }
+
+    // Financial stress recommendations
+    if (Number(data.FinancialStress) >= 4) {
+      recommendations.push({
+        category: "Financial Wellness",
+        tips: [
+          "Create a simple monthly budget to track expenses",
+          "Look into student financial aid options if available"
+        ]
+      });
+    }
+
+    // Work-life balance recommendations
+    if (Number(data.WorkStudyHours) >= 10) {
+      recommendations.push({
+        category: "Work-Life Balance",
+        tips: [
+          "Schedule dedicated time for relaxation each day",
+          "Set clear boundaries between work and personal time"
+        ]
+      });
+    }
+
+    return recommendations;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -108,6 +169,12 @@ const DepressionPrediction = () => {
       const response = await axios.post('http://127.0.0.1:5000/predict', formattedData);
       console.log('Response:', response.data); // Add this for debugging
       setPrediction(response.data.DepressionRisk);
+      // Generate personalized recommendations based on form data
+      const personalizedRecommendations = generatePersonalizedRecommendations(formData);
+      setPrediction({
+        risk: response.data.DepressionRisk,
+        recommendations: personalizedRecommendations
+      });
     } catch (error) {
       console.error('Error making prediction:', error.response?.data || error.message);
       alert('Error making prediction. Please try again.');
@@ -207,14 +274,29 @@ const DepressionPrediction = () => {
         </form>
 
         {prediction !== null && (
-          <div className={`result ${prediction === 1 ? 'high-risk' : 'low-risk'}`}>
+          <div className={`result ${prediction.risk === 1 ? 'high-risk' : 'low-risk'}`}>
             <h3>Assessment Result</h3>
             <div className="risk-level">
               <span className="risk-label">Risk Level:</span>
-              <span className="risk-value">{prediction === 1 ? 'High' : 'Low'}</span>
+              <span className="risk-value">{prediction.risk === 1 ? 'High' : 'Low'}</span>
             </div>
+            
+            <div className="personalized-recommendations">
+              <h4>Personalized Recommendations</h4>
+              {prediction.recommendations.map((rec, index) => (
+                <div key={index} className="recommendation-category">
+                  <h5>{rec.category}</h5>
+                  <ul>
+                    {rec.tips.map((tip, tipIndex) => (
+                      <li key={tipIndex}>{tip}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
             <div className="result-message">
-              {prediction === 1 ? (
+              {prediction.risk === 1 ? (
                 <>
                   <p>Based on your responses, you may be at higher risk for depression.</p>
                   <p>We strongly recommend:</p>
