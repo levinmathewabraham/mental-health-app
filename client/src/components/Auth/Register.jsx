@@ -1,39 +1,60 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from "../Navbar";
 import './auth.css';
 
 const Register = () => {
-    const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({ 
+        username: '', 
+        email: '', 
+        password: '',
+        adminCode: '' 
+    });
+    const [showAdminField, setShowAdminField] = useState(false);
     const [message, setMessage] = useState('');
     const [isSuccess, setIsSuccess] = useState(false);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { username, email, password } = formData;
-            await axios.post('http://localhost:5000/api/auth/register', {
-                username,
-                email,
-                password
-            });
-            setMessage('Registration successful! You can now log in.');
+            // Only include adminCode if admin registration is selected
+            const dataToSend = {
+                username: formData.username,
+                email: formData.email,
+                password: formData.password,
+                ...(showAdminField && { adminCode: formData.adminCode })
+            };
+
+            console.log('Sending registration data:', dataToSend); // Debug log
+
+            await axios.post('http://localhost:5000/api/auth/register', dataToSend);
+            setMessage('Registration successful! Please log in.');
             setIsSuccess(true);
+            
+            // Redirect to login page after successful registration
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000);
         } catch (error) {
-            setMessage(error.response?.data?.message || 'Registration failed!');
+            console.error('Registration error:', error.response?.data); // Debug log
+            setMessage(error.response?.data?.error || 'Registration failed!');
             setIsSuccess(false);
         }
     };
 
     return (
         <div>
-          <Navbar />
+            <Navbar />
             <div className="auth-container">
                 <h1>Register</h1>
                 <form onSubmit={handleSubmit}>
@@ -61,9 +82,38 @@ const Register = () => {
                         onChange={handleInputChange}
                         required
                     />
+                    <div className="admin-toggle">
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={showAdminField}
+                                onChange={() => {
+                                    setShowAdminField(!showAdminField);
+                                    if (!showAdminField) {
+                                        setFormData(prev => ({ ...prev, adminCode: '' }));
+                                    }
+                                }}
+                            />
+                            Register as Admin
+                        </label>
+                    </div>
+                    {showAdminField && (
+                        <input
+                            type="password"
+                            name="adminCode"
+                            placeholder="Admin Code"
+                            value={formData.adminCode}
+                            onChange={handleInputChange}
+                            required={showAdminField}
+                        />
+                    )}
                     <button type="submit">Register</button>
                 </form>
-                {message && <p className={`auth-message ${isSuccess ? 'success' : 'error'}`}>{message}</p>}
+                {message && (
+                    <p className={`auth-message ${isSuccess ? 'success' : 'error'}`}>
+                        {message}
+                    </p>
+                )}
                 <p>
                     Already have an account? <Link to="/login">Sign in</Link>
                 </p>

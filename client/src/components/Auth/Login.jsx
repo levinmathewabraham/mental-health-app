@@ -23,18 +23,25 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // API call to backend login route
       const response = await axios.post('http://localhost:5000/api/auth/login', formData);
-
-      // Save user session to localStorage
+      
+      // Save user data to localStorage
       localStorage.setItem('user', JSON.stringify(response.data.user));
       setMessage('Login successful!');
-      console.log(localStorage.getItem('user')); // Should contain logged-in user data
       setIsSuccess(true);
-      setTimeout(() => navigate('/dashboard'), 2000);
+      
+      console.log('User data:', response.data.user); // Debug log
+      
+      // Check if user is admin and redirect accordingly
+      if (response.data.user.isAdmin === true) {
+        console.log('Redirecting to admin dashboard'); // Debug log
+        navigate('/admin');
+      } else {
+        console.log('Redirecting to user dashboard'); // Debug log
+        navigate('/dashboard');
+      }
     } catch (error) {
-      // Display error message
-      setMessage(error.response?.data.message || 'Login failed! Please try again.');
+      setMessage(error.response?.data.error || 'Login failed! Please try again.');
       setIsSuccess(false);
     }
   };

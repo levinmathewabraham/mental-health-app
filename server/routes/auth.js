@@ -5,8 +5,7 @@ const router = express.Router();
 
 // Register User
 router.post('/register', async (req, res) => {
-  const { username, email, password } = req.body;
-  console.log("Incoming registration request:", req.body); // Debug log for incoming payload
+  const { username, email, password, adminCode } = req.body;
 
   // Check if required fields are present
   if (!username || !email || !password) {
@@ -15,26 +14,37 @@ router.post('/register', async (req, res) => {
   }
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("Password hashed successfully."); // Debug log for hashing step
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: 'Email already exists' });
+    }
 
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Verify admin code if provided
+    let isAdmin = false;
+    if (adminCode && adminCode.trim() === process.env.ADMIN_SECRET_CODE.trim()) {
+      isAdmin = true;
+      console.log("Admin code verified successfully"); // Debug log
+    }
+
+    // Create new user
     const newUser = new User({
       username,
       email,
       password: hashedPassword,
+      isAdmin
     });
-    console.log("Prepared newUser object:", newUser); // Debug log for User object
-    
-    await newUser.save();
-    console.log("User saved to MongoDB."); // Debug log for successful save
 
-    res.status(201).json({ message: 'User registered successfully.' });
-  } catch (err) {
-    console.error("Error during user registration:", err.message); // Log error details
-    if (err.code === 11000) {
-      return res.status(400).json({ error: 'Email already exists.' }); // Handle duplicate email
-    }
-    res.status(500).json({ error: 'Registration failed.' });
+    await newUser.save();
+    console.log("User saved with admin status:", isAdmin); // Debug log
+    
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (error) {
+    console.error("Registration error:", error);
+    res.status(500).json({ error: 'Registration failed' });
   }
 });
 

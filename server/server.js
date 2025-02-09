@@ -11,6 +11,7 @@ const { Server } = require('socket.io');
 const User = require('./models/User'); // Ensure User model is available
 const authRoutes = require('./routes/auth');
 const moodRoutes = require('./routes/mood');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 const port = 5000;
@@ -45,6 +46,7 @@ mongoose.connect(process.env.MONGO_URI)
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/mood', moodRoutes);
+app.use('/api/admin', adminRoutes);
 
 app.get('/', (req, res) => {
   res.send('Server connected successfully!');
