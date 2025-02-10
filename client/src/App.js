@@ -9,6 +9,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import RealTimeNotification from "./components/RealTimeNotification";
 import DepressionPrediction from './components/DepressionPrediction';
 import Footer from './components/Footer';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import './App.css';
 
 function App() {

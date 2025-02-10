@@ -23,19 +23,19 @@ const Footer = () => {
         <div className="footer-section">
           <h4>Emergency Contacts</h4>
           <ul>
-            <li>National Crisis Line: 988</li>
-            <li>Emergency: 911</li>
-            <li><a href="https://www.samhsa.gov/find-help/national-helpline">SAMHSA Helpline</a></li>
+            <li>National Crisis Line: 1056</li>
+            <li>Emergency: 100</li>
+            <li>1800-599-0019</li>
           </ul>
         </div>
         
         <div className="footer-section">
           <h4>Connect With Us</h4>
           <div className="social-links">
-            <a href="www.twitter.com"><i className="fab fa-twitter"></i></a>
-            <a href="www.facebook.com"><i className="fab fa-facebook"></i></a>
-            <a href="www.instagram.com"><i className="fab fa-instagram"></i></a>
-            <a href="www.linkedin.com"><i className="fab fa-linkedin"></i></a>
+            <a href="https://www.twitter.com"><i className="fab fa-twitter"></i></a>
+            <a href="https://www.facebook.com"><i className="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com"><i className="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com"><i className="fab fa-linkedin"></i></a>
           </div>
         </div>
       </div>

@@ -16,6 +16,32 @@
     
   .landing-container {
     text-align: center;
+    min-height: 100vh;
+    background-image: url('../assets/images/main.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+  }
+  
+  /* Add some background overlay for better text readability */
+  .landing-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+    z-index: 1;
+  }
+  
+  /* Ensure content stays above the overlay */
+  .landing-container > * {
+    position: relative;
+    z-index: 2;
+    color: white; /* Change text color to white for better visibility */
   }
   
   /* Navbar Styling */
@@ -63,7 +89,6 @@
   
   /* Hero Section */
   .hero-section {
-    background-color: #F4F8FB;
     padding: 5rem 2rem;
   }
   
@@ -96,7 +121,6 @@
   /* About Section */
   .about-section {
     padding: 3rem 2rem;
-    background-color: #F9F9F9;
   }
   
   .about-section h2 {
@@ -107,13 +131,11 @@
   .about-section p {
     font-size: 1rem;
     margin-top: 1rem;
-    color: #555;
   }
   
   /* Contact Section */
   .contact-section {
     padding: 3rem 2rem;
-    background-color: #FFF;
   }
   
   .contact-section h2 {
@@ -124,7 +146,6 @@
   .contact-section p {
     font-size: 1rem;
     margin-top: 1rem;
-    color: #555;
   }
   
   .contact-section a {
