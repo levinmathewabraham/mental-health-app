@@ -35,33 +35,33 @@ const MoodAnalytics = () => {
   const [timeRange, setTimeRange] = useState('week'); // week, month, year
 
   useEffect(() => {
+    const fetchMoodData = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const response = await axios.get(`http://localhost:5000/api/admin/mood-analytics`, {
+          headers: { userId: user._id },
+          params: { timeRange }
+        });
+        setMoodData(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError('Failed to fetch mood analytics');
+        setLoading(false);
+      }
+    };
+
     fetchMoodData();
   }, [timeRange]);
-
-  const fetchMoodData = async () => {
-    try {
-      const user = JSON.parse(localStorage.getItem('user'));
-      const response = await axios.get(`http://localhost:5000/api/admin/mood-analytics`, {
-        headers: { userId: user._id },
-        params: { timeRange }
-      });
-      setMoodData(response.data);
-      setLoading(false);
-    } catch (error) {
-      setError('Failed to fetch mood analytics');
-      setLoading(false);
-    }
-  };
 
   if (loading) return <div>Loading analytics...</div>;
   if (error) return <div className="error">{error}</div>;
   if (!moodData) return <div>No data available</div>;
 
   const averageMoodChart = {
-    labels: moodData.dailyAverages.map(d => d.date),
+    labels: moodData?.dailyAverages?.map(d => d.date) || [],
     datasets: [{
       label: 'Average Mood',
-      data: moodData.dailyAverages.map(d => d.average),
+      data: moodData?.dailyAverages?.map(d => d.average) || [],
       borderColor: 'rgb(75, 192, 192)',
       tension: 0.1
     }]
@@ -70,7 +70,7 @@ const MoodAnalytics = () => {
   const moodDistributionChart = {
     labels: ['Very Low', 'Low', 'Neutral', 'Good', 'Excellent'],
     datasets: [{
-      data: moodData.moodDistribution,
+      data: moodData?.moodDistribution || [],
       backgroundColor: [
         '#FF6384',
         '#FF9F40',
@@ -82,12 +82,18 @@ const MoodAnalytics = () => {
   };
 
   const userActivityChart = {
-    labels: moodData.userActivity.map(d => d.date),
+    labels: moodData?.userActivity?.map(d => d.date) || [],
     datasets: [{
       label: 'Number of Mood Logs',
-      data: moodData.userActivity.map(d => d.count),
+      data: moodData?.userActivity?.map(d => d.count) || [],
       backgroundColor: 'rgba(54, 162, 235, 0.5)'
     }]
+  };
+
+  const stats = {
+    totalLogs: moodData?.totalLogs || 0,
+    overallAverage: (moodData?.overallAverage || 0).toFixed(2),
+    activeUsers: moodData?.activeUsers || 0
   };
 
   return (
@@ -153,15 +159,15 @@ const MoodAnalytics = () => {
         <div className="stats-summary">
           <div className="stat-item">
             <h4>Total Logs</h4>
-            <p>{moodData.totalLogs}</p>
+            <p>{stats.totalLogs}</p>
           </div>
           <div className="stat-item">
             <h4>Average Mood</h4>
-            <p>{moodData.overallAverage.toFixed(2)}</p>
+            <p>{stats.overallAverage}</p>
           </div>
           <div className="stat-item">
             <h4>Active Users</h4>
-            <p>{moodData.activeUsers}</p>
+            <p>{stats.activeUsers}</p>
           </div>
         </div>
       </div>
