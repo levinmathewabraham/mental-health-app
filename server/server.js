@@ -129,7 +129,7 @@ cron.schedule('0 9 * * *', async () => {
 //Real-time notifications
 io.on('connection', (socket) => {
   console.log('New client connected');
-  io.emit("notification", "This is a test notification from the backend!");
+  io.emit("notification", "Hope you have a great day!");
 
   socket.on('disconnect', () => {
     console.log('Client disconnected');

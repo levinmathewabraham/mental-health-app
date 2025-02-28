@@ -11,6 +11,7 @@ import DepressionPrediction from './components/DepressionPrediction';
 import Footer from './components/Footer';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './App.css';
+import TermsOfService from './components/TermOfService';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/depression-assessment" element={<DepressionPrediction />} />
+            <Route path="/terms" element={<TermsOfService />} />
             {/* Add other routes here, e.g., Dashboard */}
             <Route path="/" element={<Login />} /> {/* Default route */}
           </Routes>

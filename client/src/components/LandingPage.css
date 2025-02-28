@@ -61,6 +61,7 @@
   
   .nav-links {
     display: flex;
+    justify-content: center;
     gap: 1rem;
   }
   
@@ -175,5 +176,112 @@
       flex-direction: column;
       gap: 0.5rem;
     }
+  }
+  
+  .landing-page {
+    min-height: 100vh;
+    background-color: var(--background-color);
+  }
+  
+  .hero {
+    padding: 8rem 2rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  .hero-content h1 {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+    color: transparent;
+  }
+  
+  .hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .primary-button, .secondary-button {
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: transform 0.2s;
+  }
+  
+  .primary-button {
+    background: var(--primary-color);
+    color: white;
+  }
+  
+  .secondary-button {
+    background: transparent;
+    height: 20px;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+  }
+  
+  .features {
+    padding: 4rem 2rem;
+    background: var(--background-color);
+  }
+  
+  .features-grid {
+    max-width: 1200px;
+    margin: 3rem auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+  
+  .feature-card {
+    padding: 2rem;
+    background: white;
+    color: black;
+    border-radius: 15px;
+    box-shadow: var(--shadow-medium);
+    transition: transform 0.3s;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .feature-icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+  }
+  
+  .testimonials {
+    padding: 4rem 2rem;
+    background: var(--background-color);
+  }
+  
+  .cta {
+    padding: 6rem 2rem;
+    text-align: center;
+    background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+    color: white;
+  }
+  
+  .cta-button {
+    display: inline-block;
+    padding: 1rem 3rem;
+    background: white;
+    color: var(--primary-color);
+    border-radius: 30px;
+    font-weight: 600;
+    margin-top: 2rem;
+    transition: transform 0.2s;
+  }
+  
+  .cta-button:hover {
+    transform: translateY(-2px);
   }
   
