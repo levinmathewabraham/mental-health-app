@@ -10,7 +10,6 @@ const AdminDashboard = () => {
   const [stats, setStats] = useState({
     totalUsers: 0,
     totalMoodLogs: 0,
-    highRiskUsers: 0
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -88,10 +87,6 @@ const AdminDashboard = () => {
           <div className="stat-card">
             <h3>Total Mood Logs</h3>
             <p>{stats.totalMoodLogs}</p>
-          </div>
-          <div className="stat-card">
-            <h3>High Risk Users</h3>
-            <p>{stats.highRiskUsers}</p>
           </div>
         </div>
 

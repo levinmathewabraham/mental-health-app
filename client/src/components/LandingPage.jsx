@@ -13,11 +13,12 @@ const LandingPage = () => {
           <p>Track your moods, gain insights, and improve your well-being with MoodSync.</p>
           <div className="hero-buttons">
             <Link to="/register" className="cta-button primary-button">Get Started</Link>
-            <Link to="/features" className="secondary-button">Learn More</Link>
+            <Link to="/resources" className="secondary-button">Learn More</Link>
           </div>
         </header>
         
         <section id="features" className="features">
+          <h2>What We Offer</h2>
           <div className="features-grid">
             <div className="feature-card">
               <div className="feature-icon">📊</div>
@@ -75,9 +76,9 @@ const LandingPage = () => {
           <p>Got questions? Reach out to our support team at <a href="mailto:support@moodsync.com">support@moodsync.com</a></p>
           <p>Follow us on social media for mental health tips and updates:</p>
           <div className="nav-links">
-            <a href="#twitter" className="nav-link">Twitter</a>
-            <a href="#instagram" className="nav-link">Instagram</a>
-            <a href="#facebook" className="nav-link">Facebook</a>
+            <a href="https://www.twitter.com" className="nav-link">Twitter</a>
+            <a href="https://www.instagram.com" className="nav-link">Instagram</a>
+            <a href="https://www.facebook.com" className="nav-link">Facebook</a>
           </div>
         </section>
       </div>

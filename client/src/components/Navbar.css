@@ -127,17 +127,11 @@
   transition: var(--transition);
 }
 
-.nav-link:hover {
-  background: rgba(76, 175, 80, 0.08);
-  color: var(--primary-color);
-}
-
 .nav-link:hover .nav-icon {
   transform: translateY(-2px);
 }
 
 .nav-link.active {
-  color: var(--primary-color);
   font-weight: 600;
   background: rgba(76, 175, 80, 0.12);
 }
@@ -194,8 +188,8 @@
 }
 
 .login-button {
-  background: transparent;
-  color: var(--primary-color);
+  color: white;
+  background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
   border: 1px solid var(--primary-color);
   text-decoration: none;
 }
@@ -207,20 +201,9 @@
   box-shadow: 0 4px 10px rgba(76, 175, 80, 0.25);
 }
 
-.logout-button {
-  background: rgba(244, 67, 54, 0.1);
-  color: #f44336;
-  border: 1px solid rgba(244, 67, 54, 0.3);
-}
-
 .auth-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
-}
-
-.logout-button:hover {
-  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.15);
-  background: rgba(244, 67, 54, 0.15);
 }
 
 .settings-link {
@@ -241,7 +224,8 @@
 
 .dashboard-link {
   background: rgba(76, 175, 80, 0.1);
-  border-radius: var(--border-radius);
+  border: 0px;
+  cursor: pointer;
 }
 
 .menu-toggle {

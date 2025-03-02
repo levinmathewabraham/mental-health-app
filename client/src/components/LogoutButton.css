@@ -1,0 +1,19 @@
+/* mental-health-app/client/src/components/LogoutButton.css */
+.logout-btn {
+    color: white;
+    background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+    border: 1px solid var(--primary-color);
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0.6rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: var(--transition);
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+
+.logout-btn:focus {
+  outline: none; /* Remove outline on focus */
+}

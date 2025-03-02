@@ -54,6 +54,7 @@
 
 .social-links {
   display: flex;
+  justify-content: center;
   gap: 1rem;
 }
 
@@ -89,4 +90,4 @@
   .social-links {
     justify-content: center;
   }
-} 
+}

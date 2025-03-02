@@ -19,17 +19,8 @@ const AdminNavbar = () => {
       </div>
       
       <div className="admin-navbar-middle">
-        <Link to="/admin" className="admin-nav-link">
-          Dashboard
-        </Link>
-        <Link to="/admin/users" className="admin-nav-link">
-          User Management
-        </Link>
-        <Link to="/admin/reports" className="admin-nav-link">
-          Reports
-        </Link>
-        <Link to="/admin/settings" className="admin-nav-link">
-          Settings
+        <Link to="/" className="admin-nav-link">
+          Home
         </Link>
       </div>
 

@@ -8,7 +8,6 @@
 .dashboard-layout {
   display: flex;
   flex: 1;
-  margin-top: 70px; /* Space for fixed navbar */
 }
 
 .dashboard-content {

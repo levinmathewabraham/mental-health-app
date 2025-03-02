@@ -12,6 +12,12 @@ import Footer from './components/Footer';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './App.css';
 import TermsOfService from './components/TermOfService';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import ContactUs from './components/Contact';
+import AboutUs from './components/About';
+import ResourcesPage from './components/ResourcesPage';
+import SelfCareStrategiesPage from './components/SelfCareStrategiesPage';
+import SupportGroupsPage from './components/SupportGroupsPage';
 
 function App() {
   return (
@@ -24,10 +30,15 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/depression-assessment" element={<DepressionPrediction />} />
+            <Route path="/about" element={<AboutUs />} />
             <Route path="/terms" element={<TermsOfService />} />
-            {/* Add other routes here, e.g., Dashboard */}
+            <Route path="/policy" element={<PrivacyPolicy />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/resources" element={<ResourcesPage />} />
+            <Route path="/self-care-strategies" element={<SelfCareStrategiesPage />} />
+            <Route path="/support-groups" element={<SupportGroupsPage />} />
             <Route path="/" element={<Login />} /> {/* Default route */}
           </Routes>
         </div>

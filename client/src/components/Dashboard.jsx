@@ -118,6 +118,12 @@ function Dashboard() {
                 >
                   <FaLightbulb /> Insights
                 </button>
+                <button 
+                  className={`tab-button ${activeTab === "lifestyle-tips" ? "active" : ""}`}
+                  onClick={() => setActiveTab("lifestyle-tips")}
+                >
+                  <FaLightbulb /> Lifestyle Tips
+                </button>
               </div>
 
               <div className="tab-content">
@@ -163,6 +169,57 @@ function Dashboard() {
                       <div className="chart-container expanded">
                         <MoodChart data={moodData} hideCorrelations={false} />
                       </div>
+                    </section>
+                  </div>
+                )}
+
+                {activeTab === "lifestyle-tips" && (
+                  <div className="dashboard-sections">
+                    <section className="dashboard-card">
+                      <h2>Lifestyle Tips</h2>
+                      <section className="correlations-card">
+                        <div className="correlations-content">
+                          <div className="correlation-item">
+                            <p>Maintain a balanced diet rich in fruits, vegetables, and whole grains.</p>
+                          </div>
+                        </div>
+                        <br />
+                        <div className="correlations-content">
+                          <div className="correlation-item">
+                            <p>Engage in regular physical activity, aiming for at least 30 minutes a day.</p>
+                          </div>
+                        </div>
+                        <br />
+                        <div className="correlations-content">
+                          <div className="correlation-item">
+                            <p>Practice mindfulness or meditation to reduce stress and improve mental clarity</p>
+                          </div>
+                        </div>
+                        <br />
+                        <div className="correlations-content">
+                          <div className="correlation-item">
+                            <p>Ensure you get enough sleep, aiming for 7-9 hours per night.</p>
+                          </div>
+                        </div>
+                        <br />
+                        <div className="correlations-content">
+                          <div className="correlation-item">
+                            <p>Stay connected with friends and family to foster supportive relationships.</p>
+                          </div>
+                        </div>
+                        <br />
+                        <div className="correlations-content">
+                          <div className="correlation-item">
+                            <p>Limit screen time, especially before bed, to improve sleep quality.</p>
+                          </div>
+                        </div>
+                        <br />
+                        <div className="correlations-content">
+                          <div className="correlation-item">
+                            <p>Consider journaling to express your thoughts and feelings.</p>
+                          </div>
+                        </div>
+                      </section>
                     </section>
                   </div>
                 )}

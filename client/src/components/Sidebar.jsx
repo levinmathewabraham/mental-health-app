@@ -34,45 +34,32 @@ const Sidebar = ({ username }) => {
               {expanded && <span className="menu-text">Dashboard</span>}
             </Link>
           </li>
-          <li className={isActive('/dashboard/mood-logger') ? 'active' : ''}>
-            <Link to="/dashboard/mood-logger">
-              <span className="icon">📘</span>
-              {expanded && <span className="menu-text">Log Mood</span>}
+          <li className={isActive('/mental-health-resources') ? 'active' : ''}>
+            <Link to="/resources">
+              <span className="icon">📚</span>
+              {expanded && <span className="menu-text">Mental Health Resources</span>}
             </Link>
           </li>
-          <li className={isActive('/dashboard/mood-trends') ? 'active' : ''}>
-            <Link to="/dashboard/mood-trends">
-              <span className="icon">📈</span>
-              {expanded && <span className="menu-text">Mood Trends</span>}
+          <li className={isActive('/self-care-strategies') ? 'active' : ''}>
+            <Link to="/self-care-strategies">
+              <span className="icon">💆‍♂️</span>
+              {expanded && <span className="menu-text">Self-Care Strategies</span>}
             </Link>
           </li>
-          <li className={isActive('/dashboard/predictor') ? 'active' : ''}>
-            <Link to="/dashboard/predictor">
+          <li className={isActive('/support-groups') ? 'active' : ''}>
+            <Link to="/support-groups">
+              <span className="icon">🤝</span>
+              {expanded && <span className="menu-text">Support Groups</span>}
+            </Link>
+          </li>
+          <li className={isActive('/depression-assessment') ? 'active' : ''}>
+            <Link to="/depression-assessment">
               <span className="icon">🩺</span>
               {expanded && <span className="menu-text">Depression Predictor</span>}
             </Link>
           </li>
-          <li className={isActive('/dashboard/recommendations') ? 'active' : ''}>
-            <Link to="/dashboard/recommendations">
-              <span className="icon">💡</span>
-              {expanded && <span className="menu-text">Lifestyle Tips</span>}
-            </Link>
-          </li>
         </ul>
       </nav>
-      
-      {expanded && (
-        <div className="sidebar-footer">
-          <Link to="/settings" className="settings-link">
-            <span className="icon">⚙️</span>
-            <span className="menu-text">Settings</span>
-          </Link>
-          <Link to="/help" className="help-link">
-            <span className="icon">❓</span>
-            <span className="menu-text">Help</span>
-          </Link>
-        </div>
-      )}
     </div>
   );
 };
