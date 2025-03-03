@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
+import './ResourcesPage.css';
 
 const TermsOfService = () => {
     return (
@@ -8,7 +9,7 @@ const TermsOfService = () => {
             <header className="hero-section">
                 <h1>Terms of Service</h1>
             </header>
-            <section className="terms-content">
+            <section className="resource-section">
                 <h2>1. Acceptance of Terms</h2>
                 <p>By accessing or using the MoodSync application, you agree to comply with and be bound by these Terms of Service. If you do not agree with any part of these terms, you must not use the application.</p>
 

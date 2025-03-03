@@ -179,6 +179,8 @@
   }
   
   .landing-page {
+    width: 100%;
+    overflow: hidden;
     min-height: 100vh;
     background-color: var(--background-color);
   }

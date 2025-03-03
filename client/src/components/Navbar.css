@@ -93,10 +93,8 @@
 }
 
 .logo-text {
-  background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
   background-clip: text;
   -webkit-background-clip: text;
-  color: transparent;
   font-weight: 800;
   letter-spacing: -0.5px;
 }
@@ -248,62 +246,57 @@
 
 @media (max-width: 768px) {
   .menu-toggle {
-    display: block;
+    display: block; /* Show menu toggle button on smaller screens */
   }
 
   .nav-links {
-    position: fixed;
-    top: var(--navbar-height);
-    right: -100%;
-    width: 280px;
-    height: calc(100vh - var(--navbar-height));
-    flex-direction: column;
+    position: absolute; /* Change to absolute positioning */
+    top: var(--navbar-height); /* Position below the navbar */
+    right: 0; /* Align to the right */
+    width: 100%; /* Full width */
+    height: auto; /* Auto height for dropdown */
+    flex-direction: column; /* Stack items vertically */
     background: white;
-    padding: 2rem 1.5rem;
-    gap: 1.5rem;
-    align-items: flex-start;
-    transition: right 0.3s ease;
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-  }
-
-  .navbar.scrolled .nav-links {
-    top: var(--navbar-height-scrolled);
-    height: calc(100vh - var(--navbar-height-scrolled));
+    padding: 1rem; /* Add padding */
+    gap: 1rem; /* Space between items */
+    align-items: flex-start; /* Align items to the start */
+    transition: max-height 0.3s ease; /* Smooth transition */
+    max-height: 0; /* Start hidden */
+    overflow: hidden; /* Hide overflow */
   }
 
   .nav-links.active {
-    right: 0;
+    max-height: 300px; /* Set a max height when active (adjust as needed) */
   }
 
   .auth-buttons {
-    width: 100%;
+    width: 100%; /* Full width for buttons */
     margin-top: 1rem;
   }
   
   .nav-link, .auth-button {
-    width: 100%;
-    justify-content: flex-start;
+    width: 100%; /* Full width for links */
+    justify-content: flex-start; /* Align text to the left */
   }
   
   .user-actions {
-    width: 100%;
-    justify-content: space-between;
-    margin-right: 0;
+    width: 100%; /* Full width for user actions */
+    justify-content: space-between; /* Space between elements */
+    margin-right: 0; /* Reset margin */
   }
 }
 
 @media (max-width: 480px) {
   .navbar-content {
-    padding: 0 1rem;
+    padding: 0 1rem; /* Adjust padding for smaller screens */
   }
   
   .logo-text {
-    font-size: 1.3rem;
+    font-size: 1.3rem; /* Smaller logo text */
   }
   
   .auth-buttons {
-    flex-direction: column;
-    gap: 0.5rem;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 0.5rem; /* Space between buttons */
   }
 }
