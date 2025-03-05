@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const MoodLog = require('../models/MoodLog');
+const nodemailer = require('nodemailer');
 
 // Middleware to check if user is admin
 const isAdmin = async (req, res, next) => {
@@ -137,6 +138,43 @@ router.get('/mood-analytics', isAdmin, async (req, res) => {
   } catch (error) {
     console.error('Error fetching mood analytics:', error);
     res.status(500).json({ error: 'Failed to fetch mood analytics' });
+  }
+});
+
+// Send manual email notification to user
+router.post('/send-notification', isAdmin, async (req, res) => {
+  try {
+    const { userId, subject, message } = req.body;
+    
+    // Find user email
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Create transporter instance
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.SMTP_USER,
+      to: user.email,
+      subject: subject,
+      text: message,
+    };
+
+    // Send email
+    await transporter.sendMail(mailOptions);
+    
+    res.json({ message: 'Notification sent successfully' });
+  } catch (error) {
+    console.error('Error sending notification:', error);
+    res.status(500).json({ error: 'Failed to send notification' });
   }
 });
 

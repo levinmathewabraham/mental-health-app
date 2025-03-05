@@ -8,6 +8,7 @@ import Register from './components/Auth/Register';
 import RealTimeNotification from "./components/RealTimeNotification";
 import DepressionPrediction from './components/DepressionPrediction';
 import Footer from './components/Footer';
+import ProtectedRoute from './components/ProtectedRoute';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './App.css';
 import TermsOfService from './components/TermsOfService';
@@ -28,9 +29,15 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/depression-assessment" element={<DepressionPrediction />} />
+            <Route path="/admin" element={ <ProtectedRoute><AdminDashboard /></ProtectedRoute> } />
+            <Route path="/dashboard/*" element={
+              <ProtectedRoute>
+                <Routes>
+                  <Route index element={<Dashboard />} />
+                  <Route path="depression-assessment" element={<DepressionPrediction />} />
+                </Routes>
+              </ProtectedRoute>
+            } />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/policy" element={<PrivacyPolicy />} />

@@ -51,6 +51,7 @@
   padding: 0.75rem 1.5rem;
   background: var(--primary-color);
   color: white;
+  text-decoration: none;
   border: none;
   border-radius: 8px;
   font-weight: 500;
@@ -137,7 +138,7 @@
 }
 
 .dashboard-card:hover {
-  transform: translateY(-3px);
+  transform: none;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
@@ -156,8 +157,18 @@
 
 /* Quick Stats Card */
 .quick-stats-card {
-  background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(246,249,252,0.9) 100%);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: none;
+  padding: 1.5rem;
+}
+
+.quick-stats-card h2 {
+  color: #0f172a;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(203, 213, 225, 0.3);
 }
 
 /* Mood Logger Card */

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from "../Navbar";
@@ -13,8 +13,42 @@ const Register = () => {
         adminCode: '' 
     });
     const [showAdminField, setShowAdminField] = useState(false);
+    const [showAdminOption, setShowAdminOption] = useState(false);
     const [message, setMessage] = useState('');
     const [isSuccess, setIsSuccess] = useState(false);
+    const [keySequence, setKeySequence] = useState([]);
+    const [showHint, setShowHint] = useState(false);
+
+    // Secret key combination: 'admin' (press these letters in sequence)
+    const SECRET_CODE = 'admin';
+    
+    useEffect(() => {
+        const handleKeyPress = (e) => {
+            const newSequence = [...keySequence, e.key].slice(-5);
+            setKeySequence(newSequence);
+            
+            if (newSequence.join('') === SECRET_CODE) {
+                setShowAdminOption(true);
+                // Add animation class to form
+                document.querySelector('.auth-container').classList.add('unlock-animation');
+                // Remove animation class after animation completes
+                setTimeout(() => {
+                    document.querySelector('.auth-container').classList.remove('unlock-animation');
+                }, 1000);
+            }
+        };
+
+        window.addEventListener('keypress', handleKeyPress);
+        return () => window.removeEventListener('keypress', handleKeyPress);
+    }, [keySequence]);
+
+    // Show hint after 30 seconds
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowHint(true);
+        }, 30000);
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -27,7 +61,6 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Only include adminCode if admin registration is selected
             const dataToSend = {
                 username: formData.username,
                 email: formData.email,
@@ -35,20 +68,24 @@ const Register = () => {
                 ...(showAdminField && { adminCode: formData.adminCode })
             };
 
-            console.log('Sending registration data:', dataToSend); // Debug log
-
             await axios.post('http://localhost:5000/api/auth/register', dataToSend);
             setMessage('Registration successful! Please log in.');
             setIsSuccess(true);
             
-            // Redirect to login page after successful registration
+            // Add success animation
+            document.querySelector('.auth-container').classList.add('success-animation');
+            
             setTimeout(() => {
                 navigate('/login');
             }, 2000);
         } catch (error) {
-            console.error('Registration error:', error.response?.data); // Debug log
             setMessage(error.response?.data?.error || 'Registration failed!');
             setIsSuccess(false);
+            // Add error shake animation
+            document.querySelector('.auth-container').classList.add('error-animation');
+            setTimeout(() => {
+                document.querySelector('.auth-container').classList.remove('error-animation');
+            }, 500);
         }
     };
 
@@ -57,6 +94,11 @@ const Register = () => {
             <Navbar />
             <div className="auth-container">
                 <h1>Register</h1>
+                {showHint && !showAdminOption && (
+                    <div className="hint-text">
+                        Hint: Type the word that grants special access...
+                    </div>
+                )}
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
@@ -82,21 +124,25 @@ const Register = () => {
                         onChange={handleInputChange}
                         required
                     />
-                    <div className="admin-toggle">
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={showAdminField}
-                                onChange={() => {
-                                    setShowAdminField(!showAdminField);
-                                    if (!showAdminField) {
-                                        setFormData(prev => ({ ...prev, adminCode: '' }));
-                                    }
-                                }}
-                            />
-                            Register as Admin
-                        </label>
-                    </div>
+                    
+                    {showAdminOption && (
+                        <div className="admin-toggle fade-in">
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={showAdminField}
+                                    onChange={() => {
+                                        setShowAdminField(!showAdminField);
+                                        if (!showAdminField) {
+                                            setFormData(prev => ({ ...prev, adminCode: '' }));
+                                        }
+                                    }}
+                                />
+                                <span className="admin-label">Register as Admin</span>
+                            </label>
+                        </div>
+                    )}
+                    
                     {showAdminField && (
                         <input
                             type="password"
@@ -105,6 +151,7 @@ const Register = () => {
                             value={formData.adminCode}
                             onChange={handleInputChange}
                             required={showAdminField}
+                            className="fade-in"
                         />
                     )}
                     <button type="submit">Register</button>

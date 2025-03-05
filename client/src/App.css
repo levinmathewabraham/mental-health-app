@@ -42,5 +42,5 @@
 
 .content-wrapper {
   flex: 1 0 auto;
-  padding-bottom: 60px; /* Height of footer */
+  padding-bottom: 0px; /* Height of footer */
 }

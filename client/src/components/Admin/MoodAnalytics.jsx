@@ -68,15 +68,13 @@ const MoodAnalytics = () => {
   };
 
   const moodDistributionChart = {
-    labels: ['Very Low', 'Low', 'Neutral', 'Good', 'Excellent'],
+    labels: ['Sad', 'Neutral', 'Happy'],
     datasets: [{
       data: moodData?.moodDistribution || [],
       backgroundColor: [
         '#FF6384',
-        '#FF9F40',
         '#FFCD56',
-        '#4BC0C0',
-        '#36A2EB'
+        '#4BC0C0'
       ]
     }]
   };
@@ -119,7 +117,10 @@ const MoodAnalytics = () => {
               scales: {
                 y: {
                   beginAtZero: true,
-                  max: 5
+                  max: 3,
+                  ticks: {
+                    stepSize: 0.5
+                  }
                 }
               }
             }}
@@ -135,6 +136,15 @@ const MoodAnalytics = () => {
               plugins: {
                 legend: {
                   position: 'bottom'
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function(context) {
+                      const label = context.label || '';
+                      const value = context.raw || 0;
+                      return `${label}: ${value} logs`;
+                    }
+                  }
                 }
               }
             }}

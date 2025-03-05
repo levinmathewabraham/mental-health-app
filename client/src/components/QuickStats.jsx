@@ -1,71 +1,98 @@
-import React from "react";
-import "./QuickStats.css";
+import React from 'react';
+import { FaSmile, FaChartLine, FaCalendar, FaCheckCircle } from 'react-icons/fa';
+import './QuickStats.css';
 
-const QuickStats = ({ moodData }) => {
+const QuickStats = ({ moodData, correlations }) => {
+  // Calculate statistics
   const calculateStats = () => {
     if (!moodData || moodData.length === 0) {
       return {
         averageMood: 0,
-        lastMood: 0,
         totalEntries: 0,
-        streakDays: 0
+        streak: 0,
+        recentTrend: 'neutral'
       };
     }
 
-    const sortedData = [...moodData].sort((a, b) => new Date(b.date) - new Date(a.date));
-    const moodValues = moodData.map(entry => entry.mood);
-    const averageMood = moodValues.reduce((acc, val) => acc + val, 0) / moodValues.length;
+    const average = moodData.reduce((acc, entry) => acc + entry.mood, 0) / moodData.length;
     
     // Calculate streak
-    let streak = 1;
-    let currentDate = new Date(sortedData[0].date);
+    let streak = 0;
+    const today = new Date().setHours(0, 0, 0, 0);
+    const sortedData = [...moodData].sort((a, b) => new Date(b.date) - new Date(a.date));
     
-    for (let i = 1; i < sortedData.length; i++) {
-      const prevDate = new Date(sortedData[i].date);
-      const diffDays = Math.floor((currentDate - prevDate) / (1000 * 60 * 60 * 24));
-      
-      if (diffDays === 1) {
+    for (let i = 0; i < sortedData.length; i++) {
+      const entryDate = new Date(sortedData[i].date).setHours(0, 0, 0, 0);
+      const expectedDate = new Date(today - (i * 24 * 60 * 60 * 1000));
+      if (entryDate === expectedDate.setHours(0, 0, 0, 0)) {
         streak++;
-        currentDate = prevDate;
-      } else {
-        break;
-      }
+      } else break;
     }
 
+    // Calculate trend
+    const recentEntries = sortedData.slice(0, 7);
+    const trend = recentEntries.length > 1 
+      ? recentEntries[0].mood > recentEntries[recentEntries.length - 1].mood
+        ? 'improving'
+        : 'declining'
+      : 'neutral';
+
     return {
-      averageMood: averageMood.toFixed(1),
-      lastMood: sortedData[0].mood,
+      averageMood: average.toFixed(1),
       totalEntries: moodData.length,
-      streakDays: streak
+      streak,
+      recentTrend: trend
     };
   };
 
   const stats = calculateStats();
 
   return (
-    <div className="quick-stats">
-      <div className="stat-item">
-        <h3>Average Mood</h3>
-        <div className="stat-value">{stats.averageMood}</div>
-        <p>out of 10</p>
+    <div className="quick-stats-grid">
+      <div className="stat-card average-mood">
+        <div className="stat-icon">
+          <FaSmile />
+        </div>
+        <div className="stat-info">
+          <h3>Average Mood</h3>
+          <p className="stat-value">{stats.averageMood}</p>
+          <p className="stat-description">Your overall mood average</p>
+        </div>
       </div>
-      
-      <div className="stat-item">
-        <h3>Latest Mood</h3>
-        <div className="stat-value">{stats.lastMood}</div>
-        <p>your last entry</p>
+
+      <div className="stat-card total-entries">
+        <div className="stat-icon">
+          <FaCalendar />
+        </div>
+        <div className="stat-info">
+          <h3>Total Entries</h3>
+          <p className="stat-value">{stats.totalEntries}</p>
+          <p className="stat-description">Mood logs recorded</p>
+        </div>
       </div>
-      
-      <div className="stat-item">
-        <h3>Total Entries</h3>
-        <div className="stat-value">{stats.totalEntries}</div>
-        <p>logs recorded</p>
+
+      <div className="stat-card streak">
+        <div className="stat-icon">
+          <FaCheckCircle />
+        </div>
+        <div className="stat-info">
+          <h3>Current Streak</h3>
+          <p className="stat-value">{stats.streak} days</p>
+          <p className="stat-description">Keep the momentum going!</p>
+        </div>
       </div>
-      
-      <div className="stat-item">
-        <h3>Current Streak</h3>
-        <div className="stat-value">{stats.streakDays}</div>
-        <p>days in a row</p>
+
+      <div className="stat-card trend">
+        <div className="stat-icon">
+          <FaChartLine />
+        </div>
+        <div className="stat-info">
+          <h3>Recent Trend</h3>
+          <p className={`stat-value trend-${stats.recentTrend}`}>
+            {stats.recentTrend.charAt(0).toUpperCase() + stats.recentTrend.slice(1)}
+          </p>
+          <p className="stat-description">Based on last 7 days</p>
+        </div>
       </div>
     </div>
   );

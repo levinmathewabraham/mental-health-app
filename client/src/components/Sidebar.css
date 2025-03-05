@@ -140,3 +140,27 @@
 .settings-link:hover, .help-link:hover {
   color: #fff;
 }
+
+.sidebar-menu button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.sidebar-menu button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.sidebar-menu li.active button {
+  color: #4caf50;
+}

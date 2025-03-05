@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
 import './DepressionPrediction.css';
+import { useNavigate } from 'react-router-dom';
 
 const DepressionPrediction = () => {
   const [step, setStep] = useState(1);
@@ -23,6 +24,15 @@ const DepressionPrediction = () => {
 
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+  }, [navigate]);
 
   const formFields = [
     // Step 1: Personal Information
