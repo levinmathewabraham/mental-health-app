@@ -22,7 +22,7 @@ const server = http.createServer(app);
 // Initialize Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000', // React frontend origin
+    origin: 'https://mental-health-app-flax-five.vercel.app/', // React frontend origin
     methods: ['GET', 'POST'],
     credentials: true,
   },
@@ -33,7 +33,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://mental-health-app-flax-five.vercel.app/',
     credentials: true,
   })
 );
