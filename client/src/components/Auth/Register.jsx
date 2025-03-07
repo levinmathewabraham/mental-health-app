@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from "../Navbar";
 import './auth.css';
-import { API_BASE_URL } from '../config';
+import { API_BASE_URL } from '../../config';
 
 const Register = () => {
     const navigate = useNavigate();

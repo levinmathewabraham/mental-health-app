@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom'; // Redirect after login
 import Navbar from "../Navbar";
 import './auth.css'; // Optional for custom styling
-import { API_BASE_URL } from '../config';
+import { API_BASE_URL } from '../../config';
 
 const Login = () => {
   const [formData, setFormData] = useState({

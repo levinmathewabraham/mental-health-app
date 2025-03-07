@@ -14,7 +14,7 @@ import {
 } from 'chart.js';
 import axios from 'axios';
 import './MoodAnalytics.css';
-import { API_BASE_URL } from '../config';  // adjust the path as needed
+import { API_BASE_URL } from '../../config';  // adjust the path as needed
 
 // Register ChartJS components
 ChartJS.register(
