@@ -19,6 +19,10 @@ const AdminDashboard = () => {
   const [emailSubject, setEmailSubject] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
   const [activeSection, setActiveSection] = useState('dashboard');
+  const [sortConfig, setSortConfig] = useState({
+    key: null,
+    direction: 'ascending'
+  });
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -94,6 +98,29 @@ const AdminDashboard = () => {
     }
   };
 
+  const sortData = (key) => {
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+
+    const sortedUsers = [...users].sort((a, b) => {
+      if (key === 'createdAt') {
+        return direction === 'ascending' 
+          ? new Date(a[key]) - new Date(b[key])
+          : new Date(b[key]) - new Date(a[key]);
+      }
+      
+      if (direction === 'ascending') {
+        return a[key].toLowerCase() > b[key].toLowerCase() ? 1 : -1;
+      }
+      return a[key].toLowerCase() < b[key].toLowerCase() ? 1 : -1;
+    });
+
+    setUsers(sortedUsers);
+  };
+
   const renderContent = () => {
     switch (activeSection) {
       case 'users':
@@ -103,9 +130,21 @@ const AdminDashboard = () => {
             <table>
               <thead>
                 <tr>
-                  <th>Username</th>
-                  <th>Email</th>
-                  <th>Join Date</th>
+                  <th onClick={() => sortData('username')} className="sortable-header">
+                    Username {sortConfig.key === 'username' && (
+                      <span>{sortConfig.direction === 'ascending' ? '↑' : '↓'}</span>
+                    )}
+                  </th>
+                  <th onClick={() => sortData('email')} className="sortable-header">
+                    Email {sortConfig.key === 'email' && (
+                      <span>{sortConfig.direction === 'ascending' ? '↑' : '↓'}</span>
+                    )}
+                  </th>
+                  <th onClick={() => sortData('createdAt')} className="sortable-header">
+                    Join Date {sortConfig.key === 'createdAt' && (
+                      <span>{sortConfig.direction === 'ascending' ? '↑' : '↓'}</span>
+                    )}
+                  </th>
                   <th>Actions</th>
                 </tr>
               </thead>

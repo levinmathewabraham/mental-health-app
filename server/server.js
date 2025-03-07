@@ -14,7 +14,7 @@ const moodRoutes = require('./routes/mood');
 const adminRoutes = require('./routes/admin');
 
 const app = express();
-const port = 5000;
+const port = process.env.port || 5000;
 
 // Create HTTP server for Socket.IO
 const server = http.createServer(app);

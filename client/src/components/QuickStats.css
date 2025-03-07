@@ -1,56 +1,34 @@
-.quick-stats {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .stats-card {
-    flex: 1;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .stats-card h3 {
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-    color: #4caf50;
-  }
-  
-  .stats-card p {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-.quick-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-}
 
-.stat-card {
+.quickstats-card {
   background: white;
   border-radius: 16px;
-  padding: 1.5rem;
+  padding: 0.6rem;
   display: flex;
   align-items: flex-start;
-  gap: 1rem;
   transition: all 0.3s ease;
   border: 1px solid rgba(0, 0, 0, 0.05);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
 }
 
-.stat-card:hover {
+.quickstats-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.05);
 }
 
-.stat-icon {
+.quickstats-card p {
+  font-weight: bold;
+}
+
+.quickstats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.quickstats-icon {
   background: linear-gradient(135deg, var(--primary-color) 0%, #2e7d32 100%);
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -59,11 +37,11 @@
   font-size: 1.5rem;
 }
 
-.stat-info {
+.quickstats-info {
   flex: 1;
 }
 
-.stat-info h3 {
+.quickstats-info h3 {
   color: #64748b;
   font-size: 0.9rem;
   font-weight: 600;
@@ -72,16 +50,16 @@
   letter-spacing: 0.5px;
 }
 
-.stat-value {
-  font-size: 1.8rem;
+.quickstats-value {
+  font-size: 1.5rem;
   font-weight: 700;
   color: #1e293b;
   margin-bottom: 0.5rem;
 }
 
-.stat-description {
+.quickstats-description {
   color: #94a3b8;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
 /* Trend-specific styles */
@@ -98,47 +76,47 @@
 }
 
 /* Card-specific colors */
-.average-mood .stat-icon {
+.average-mood .quickstats-icon {
   background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
 }
 
-.total-entries .stat-icon {
+.total-entries .quickstats-icon {
   background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
 }
 
-.streak .stat-icon {
+.streak .quickstats-icon {
   background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
 }
 
-.trend .stat-icon {
+.trend .quickstats-icon {
   background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .quick-stats-grid {
+  .quickstats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
     padding: 0.5rem;
   }
 
-  .stat-card {
+  .quickstats-card {
     padding: 1rem;
   }
 
-  .stat-icon {
+  .quickstats-icon {
     width: 40px;
     height: 40px;
     font-size: 1.2rem;
   }
 
-  .stat-value {
+  .quickstats-value {
     font-size: 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
-  .quick-stats-grid {
+  .quickstats-grid {
     grid-template-columns: 1fr;
   }
 }

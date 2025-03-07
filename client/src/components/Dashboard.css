@@ -155,22 +155,6 @@
   margin-bottom: 1.5rem;
 }
 
-/* Quick Stats Card */
-.quick-stats-card {
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-  border: none;
-  padding: 1.5rem;
-}
-
-.quick-stats-card h2 {
-  color: #0f172a;
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid rgba(203, 213, 225, 0.3);
-}
-
 /* Mood Logger Card */
 .mood-logger-card {
   text-align: center;
@@ -340,4 +324,31 @@
     padding: 0.6rem 0.8rem;
     font-size: 0.8rem;
   }
+}
+
+.resource-section {
+  margin-bottom: 2rem;
+}
+
+.resource-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.resource-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.resource-section li {
+  margin-bottom: 0.5rem;
+}
+
+.resource-section a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+.resource-section a:hover {
+  text-decoration: underline;
 }

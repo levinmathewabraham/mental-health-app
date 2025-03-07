@@ -2,7 +2,7 @@ import React from 'react';
 import { FaSmile, FaChartLine, FaCalendar, FaCheckCircle } from 'react-icons/fa';
 import './QuickStats.css';
 
-const QuickStats = ({ moodData, correlations }) => {
+const QuickStats = ({ moodData }) => {
   // Calculate statistics
   const calculateStats = () => {
     if (!moodData || moodData.length === 0) {
@@ -48,50 +48,50 @@ const QuickStats = ({ moodData, correlations }) => {
   const stats = calculateStats();
 
   return (
-    <div className="quick-stats-grid">
-      <div className="stat-card average-mood">
-        <div className="stat-icon">
+    <div className="quickstats-grid">
+      <div className="quickstats-card average-mood">
+        <div className="quickstats-icon">
           <FaSmile />
         </div>
-        <div className="stat-info">
+        <div className="quickstats-info">
           <h3>Average Mood</h3>
-          <p className="stat-value">{stats.averageMood}</p>
-          <p className="stat-description">Your overall mood average</p>
+          <p className="quickstats-value">{stats.averageMood}</p>
+          <p className="quickstats-description">Your overall mood average</p>
         </div>
       </div>
 
-      <div className="stat-card total-entries">
-        <div className="stat-icon">
+      <div className="quickstats-card total-entries">
+        <div className="quickstats-icon">
           <FaCalendar />
         </div>
-        <div className="stat-info">
+        <div className="quickstats-info">
           <h3>Total Entries</h3>
-          <p className="stat-value">{stats.totalEntries}</p>
-          <p className="stat-description">Mood logs recorded</p>
+          <p className="quickstats-value">{stats.totalEntries}</p>
+          <p className="quickstats-description">Mood logs recorded</p>
         </div>
       </div>
 
-      <div className="stat-card streak">
-        <div className="stat-icon">
+      <div className="quickstats-card streak">
+        <div className="quickstats-icon">
           <FaCheckCircle />
         </div>
-        <div className="stat-info">
+        <div className="quickstats-info">
           <h3>Current Streak</h3>
-          <p className="stat-value">{stats.streak} days</p>
-          <p className="stat-description">Keep the momentum going!</p>
+          <p className="quickstats-value">{stats.streak} days</p>
+          <p className="quickstats-description">Keep the momentum going!</p>
         </div>
       </div>
 
-      <div className="stat-card trend">
-        <div className="stat-icon">
+      <div className="quickstats-card trend">
+        <div className="quickstats-icon">
           <FaChartLine />
         </div>
-        <div className="stat-info">
+        <div className="quickstats-info">
           <h3>Recent Trend</h3>
-          <p className={`stat-value trend-${stats.recentTrend}`}>
+          <p className={`quickstats-value trend-${stats.recentTrend}`}>
             {stats.recentTrend.charAt(0).toUpperCase() + stats.recentTrend.slice(1)}
           </p>
-          <p className="stat-description">Based on last 7 days</p>
+          <p className="quickstats-description">Based on last 7 days</p>
         </div>
       </div>
     </div>

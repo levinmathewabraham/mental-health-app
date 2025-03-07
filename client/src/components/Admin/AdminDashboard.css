@@ -175,4 +175,19 @@ th {
   .admin-dashboard-content {
     padding: 1rem;
   }
+}
+
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.sortable-header:hover {
+  background-color: #e9ecef;
+}
+
+.sortable-header span {
+  margin-left: 5px;
+  color: #3498db;
 } 

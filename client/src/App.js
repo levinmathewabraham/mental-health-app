@@ -15,9 +15,6 @@ import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import ContactUs from './components/Contact';
 import AboutUs from './components/About';
-import ResourcesPage from './components/ResourcesPage';
-import SelfCareStrategiesPage from './components/SelfCareStrategiesPage';
-import SupportGroupsPage from './components/SupportGroupsPage';
 
 function App() {
   return (
@@ -42,9 +39,6 @@ function App() {
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/policy" element={<PrivacyPolicy />} />
             <Route path="/contact" element={<ContactUs />} />
-            <Route path="/resources" element={<ResourcesPage />} />
-            <Route path="/self-care-strategies" element={<SelfCareStrategiesPage />} />
-            <Route path="/support-groups" element={<SupportGroupsPage />} />
             <Route path="/" element={<Login />} /> {/* Default route */}
           </Routes>
         </div>
