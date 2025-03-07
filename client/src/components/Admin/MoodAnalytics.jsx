@@ -14,6 +14,7 @@ import {
 } from 'chart.js';
 import axios from 'axios';
 import './MoodAnalytics.css';
+import { API_BASE_URL } from '../config';  // adjust the path as needed
 
 // Register ChartJS components
 ChartJS.register(
@@ -38,7 +39,7 @@ const MoodAnalytics = () => {
     const fetchMoodData = async () => {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
-        const response = await axios.get(`http://localhost:5000/api/admin/mood-analytics`, {
+        const response = await axios.get(`${API_BASE_URL}/api/admin/mood-analytics`, {
           headers: { userId: user._id },
           params: { timeRange }
         });

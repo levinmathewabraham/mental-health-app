@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import "./RealTimeNotification.css"; // Optional: Add custom styles
+import { API_BASE_URL } from '../config';
 
-const socket = io("http://localhost:5000", { withCredentials: true });
+const socket = io(`${API_BASE_URL}`, { withCredentials: true });
 
 function RealTimeNotification() {
   const [notifications, setNotifications] = useState([]);

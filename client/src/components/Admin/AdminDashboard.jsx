@@ -5,6 +5,7 @@ import AdminNavbar from './AdminNavbar';
 import './AdminDashboard.css';
 import MoodAnalytics from './MoodAnalytics';
 import AdminSidebar from './AdminSidebar';
+import { API_BASE_URL } from '../../config';
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
@@ -39,13 +40,13 @@ const AdminDashboard = () => {
       const user = JSON.parse(localStorage.getItem('user'));
       
       // Fetch users
-      const usersResponse = await axios.get('http://localhost:5000/api/admin/users', {
+      const usersResponse = await axios.get(`${API_BASE_URL}/api/admin/users`, {
         headers: { userId: user._id }
       });
       setUsers(usersResponse.data);
       
       // Fetch stats
-      const statsResponse = await axios.get('http://localhost:5000/api/admin/stats', {
+      const statsResponse = await axios.get(`${API_BASE_URL}/api/admin/stats`, {
         headers: { userId: user._id }
       });
       setStats(statsResponse.data);
@@ -63,7 +64,7 @@ const AdminDashboard = () => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
-        await axios.delete(`http://localhost:5000/api/admin/users/${userId}`, {
+        await axios.delete(`${API_BASE_URL}/api/admin/users/${userId}`, {
           headers: { userId: user._id }
         });
         fetchData(); // Refresh the data
@@ -78,7 +79,7 @@ const AdminDashboard = () => {
     e.preventDefault();
     try {
       const user = JSON.parse(localStorage.getItem('user'));
-      await axios.post('http://localhost:5000/api/admin/send-notification', {
+      await axios.post(`${API_BASE_URL}/api/admin/send-notification`, {
         userId: selectedUser,
         subject: emailSubject,
         message: emailMessage

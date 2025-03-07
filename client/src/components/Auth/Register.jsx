@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from "../Navbar";
 import './auth.css';
+import { API_BASE_URL } from '../config';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -68,7 +69,7 @@ const Register = () => {
                 ...(showAdminField && { adminCode: formData.adminCode })
             };
 
-            await axios.post('http://localhost:5000/api/auth/register', dataToSend);
+            await axios.post(`${API_BASE_URL}/api/auth/register`, dataToSend);
             setMessage('Registration successful! Please log in.');
             setIsSuccess(true);
             

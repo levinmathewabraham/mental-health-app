@@ -2,6 +2,7 @@ import React, { useEffect, useState} from 'react';
 import { Line } from 'react-chartjs-2';
 import axios from 'axios';
 import { Chart as ChartJS, LineElement, PointElement, LinearScale, Title, Tooltip, Legend, CategoryScale } from 'chart.js';
+import { API_BASE_URL } from '../config';
 
 ChartJS.register( LineElement, PointElement, LinearScale, Title,Tooltip, Legend, CategoryScale );
 
@@ -12,7 +13,7 @@ function MoodChart({ data, hideCorrelations = false }) {
   useEffect(() => {
     const fetchCorrelations = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/mood/correlation/${userId}`);
+        const response = await axios.get(`${API_BASE_URL}/api/mood/correlation/${userId}`);
         setCorrelations(response.data);
       } catch (error) {
         console.error("Error fetching correlations:", error);

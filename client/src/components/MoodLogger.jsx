@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./MoodLogger.css";
+import { API_BASE_URL } from '../config';
 
 function MoodLogger() {
   const [mood, setMood] = useState(2); // Default value at Neutral
@@ -11,7 +12,7 @@ function MoodLogger() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/mood/add", {
+      await axios.post(`${API_BASE_URL}/api/mood/add`, {
         userId,
         mood,
         energy,

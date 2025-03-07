@@ -9,6 +9,7 @@ import MoodChart from "./MoodChart";
 import RealTimeNotification from "./RealTimeNotification";
 import QuickStats from "./QuickStats";
 import CorrelationInsights from "./CorrelationInsights";
+import { API_BASE_URL } from '../config';
 import "./Dashboard.css";
 
 function Dashboard() {
@@ -34,13 +35,13 @@ function Dashboard() {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/mood/${parsedUser._id}`
+          `${API_BASE_URL}/api/mood/${parsedUser._id}`
         );
         setMoodData(response.data);
 
         // Fetch correlations
         const correlationsResponse = await axios.get(
-          `http://localhost:5000/api/mood/correlation/${parsedUser._id}`
+          `${API_BASE_URL}/api/mood/correlation/${parsedUser._id}`
         );
         setCorrelations(correlationsResponse.data);
       } catch (error) {
@@ -60,7 +61,7 @@ function Dashboard() {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/mood/${user._id}`
+        `${API_BASE_URL}/api/mood/${user._id}`
       );
       setMoodData(response.data);
     } catch (error) {
