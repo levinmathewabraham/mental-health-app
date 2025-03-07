@@ -12,9 +12,9 @@ const User = require('./models/User'); // Ensure User model is available
 const authRoutes = require('./routes/auth');
 const moodRoutes = require('./routes/mood');
 const adminRoutes = require('./routes/admin');
+const { PORT, CLIENT_URL } = require('./config');
 
 const app = express();
-const port = process.env.port || 5000;
 
 // Create HTTP server for Socket.IO
 const server = http.createServer(app);
@@ -22,7 +22,7 @@ const server = http.createServer(app);
 // Initialize Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: 'https://mental-health-app-flax-five.vercel.app/', // React frontend origin
+    origin: CLIENT_URL, // React frontend origin
     methods: ['GET', 'POST'],
     credentials: true,
   },
@@ -31,12 +31,10 @@ const io = new Server(server, {
 // Middleware
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin: 'https://mental-health-app-flax-five.vercel.app/',
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: CLIENT_URL,
+  credentials: true
+}));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
@@ -137,6 +135,6 @@ io.on('connection', (socket) => {
 });
 
 // Start the server
-server.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
