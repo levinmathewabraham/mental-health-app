@@ -29,20 +29,12 @@ const io = new Server(server, {
 });
 
 // Middleware
-app.use(cors({
-  origin: [
-    'http://localhost:3000',                    // Local development
-    'https://your-frontend-app.onrender.com',   // Replace with your actual frontend Render URL
-    CLIENT_URL                                  // From config
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-}));
-
-// Make sure this comes BEFORE your route definitions
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors({
+  origin: CLIENT_URL,
+  credentials: true
+}));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)

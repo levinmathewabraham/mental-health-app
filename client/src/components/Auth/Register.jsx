@@ -62,16 +62,14 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(
-                `${API_BASE_URL}/api/auth/register`,
-                { username: formData.username, email: formData.email, password: formData.password },
-                {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    withCredentials: true
-                }
-            );
+            const dataToSend = {
+                username: formData.username,
+                email: formData.email,
+                password: formData.password,
+                ...(showAdminField && { adminCode: formData.adminCode })
+            };
+
+            await axios.post(`${API_BASE_URL}/api/auth/register`, dataToSend);
             setMessage('Registration successful! Please log in.');
             setIsSuccess(true);
             
@@ -82,8 +80,7 @@ const Register = () => {
                 navigate('/login');
             }, 2000);
         } catch (error) {
-            console.error('Registration error:', error);
-            setMessage(error.response?.data?.message || 'An error occurred during registration');
+            setMessage(error.response?.data?.error || 'Registration failed!');
             setIsSuccess(false);
             // Add error shake animation
             document.querySelector('.auth-container').classList.add('error-animation');
