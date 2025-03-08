@@ -24,7 +24,16 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, formData);
+      const response = await axios.post(
+        `${API_BASE_URL}/api/auth/login`, 
+        { email: formData.email, password: formData.password },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        }
+      );
       
       // Save user data to localStorage
       localStorage.setItem('user', JSON.stringify(response.data.user));
@@ -42,7 +51,8 @@ const Login = () => {
         navigate('/dashboard');
       }
     } catch (error) {
-      setMessage(error.response?.data.error || 'Login failed! Please try again.');
+      console.error('Login error:', error);
+      setMessage(error.response?.data?.message || 'An error occurred during login');
       setIsSuccess(false);
     }
   };
