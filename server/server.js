@@ -97,7 +97,7 @@ const sendNotificationEmail = (email, message) => {
   const mailOptions = {
     from: process.env.SMTP_USER,
     to: email,
-    subject: 'MoodSync',
+    subject: 'MoodSync – Test Email',
     text: message,
   };
 
@@ -110,19 +110,37 @@ const sendNotificationEmail = (email, message) => {
   });
 };
 
-// Schedule the email to send daily at a specified time (e.g., 9 AM)
+// Schedule the email to send daily at a specified time
 cron.schedule('0 9 * * *', async () => {
   try {
-    const users = await User.find(); // Fetch all users from the database
+    const users = await User.find();
+    
+    for (const user of users) {
+      try {
+        const testEmail = `
+Hi ${user.username},
 
-    users.forEach(async (user) => {
-      const notifications = await Notification.find({ userId: user._id, isRead: false });
-      const message = 'Reminder: Log your mood today!';
+This is a test email for my main project called MoodSync. It is a web-based application designed to help students monitor and improve their mental well-being.
 
-      sendNotificationEmail(user.email, message); // Send email to the user
-    });
+NO ACTION IS REQUIRED FROM YOUR SIDE. 
+
+If this email was sent to you by mistake, or if you are not familiar with this system, I sincerely apologize. Please reply to this email requesting removal, and I will ensure that your email is removed from this system.
+
+Thank you for your understanding.
+
+- Levin Mathew Abraham
+BCA (2022 - 2025)
+        `;
+
+        await sendNotificationEmail(user.email, testEmail);
+        console.log(`Emails sent to ${user.email}`);
+      } catch (userError) {
+        console.error(`Error sending email to user ${user.email}:`, userError);
+        // Continue with next user even if one fails
+      }
+    }
   } catch (error) {
-    console.error('Error scheduling emails:', error);
+    console.error('Error in email scheduling task:', error);
   }
 });
 
