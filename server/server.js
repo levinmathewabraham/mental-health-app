@@ -126,6 +126,55 @@ cron.schedule('0 9 * * *', async () => {
   }
 });
 
+// Array of motivational and wellness messages
+const wellnessMessages = [
+  "Remember to take a deep breath and stay present.",
+  "Drinking water can improve your mood and energy levels!",
+  "Take a moment to stretch and relax your muscles.",
+  "Have you logged your mood today? It helps track your mental health journey.",
+  "A short walk can boost your creativity and mood.",
+  "Remember to practice gratitude - what are three things you're thankful for today?",
+  "Mindfulness tip: Focus on one task at a time for better mental clarity.",
+  "Self-care reminder: It's okay to take breaks when you need them.",
+  "Social connections boost mental health. Consider reaching out to a friend today.",
+  "Sleep is crucial for mental health. Aim for 7-9 hours tonight!",
+  "Healthy eating tip: Include colorful fruits and vegetables in your next meal.",
+  "Positive affirmation: You are capable and strong, even on difficult days.",
+  "Try the 5-4-3-2-1 grounding technique if you're feeling anxious.",
+  "Remember that your feelings are valid, whatever they may be today."
+];
+
+// Function to send a random notification
+const sendRandomNotification = () => {
+  const randomIndex = Math.floor(Math.random() * wellnessMessages.length);
+  const message = wellnessMessages[randomIndex];
+  const notificationId = Date.now();
+  
+  io.emit('notification', {
+    id: notificationId,
+    message: message
+  });
+  
+  console.log(`Sent notification: ${message}`);
+};
+
+// Send a notification every 10 minutes (adjust as needed)
+setInterval(sendRandomNotification, 10 * 60 * 1000);
+
+// Also send one notification shortly after server start
+setTimeout(sendRandomNotification, 10 * 1000);
+
+// Add a route to manually trigger a notification (useful for testing)
+app.post('/api/send-notification', (req, res) => {
+  try {
+    sendRandomNotification();
+    res.status(200).json({ success: true, message: 'Notification sent successfully' });
+  } catch (error) {
+    console.error('Error sending notification:', error);
+    res.status(500).json({ success: false, message: 'Failed to send notification' });
+  }
+});
+
 // Socket.IO connection handling
 io.on('connection', (socket) => {
   console.log('New client connected');

@@ -27,9 +27,19 @@ function RealTimeNotification() {
 
     // Listen for 'notification' events
     socket.on("notification", (data) => {
-      console.log('Received notification:', data); // Add logging
+      console.log('Received notification:', data);
       const notificationMessage = typeof data === "object" ? data.message : data;
-      setNotifications((prev) => [...prev, notificationMessage]);
+      const notificationId = typeof data === "object" ? data.id : Date.now();
+      
+      setNotifications((prev) => [
+        ...prev, 
+        { id: notificationId, message: notificationMessage }
+      ]);
+      
+      // Auto-dismiss after 10 seconds if not manually dismissed
+      setTimeout(() => {
+        dismissNotification(notificationId);
+      }, 30000);
     });
 
     // Clean up on unmount
@@ -40,11 +50,21 @@ function RealTimeNotification() {
     };
   }, []);
 
+  const dismissNotification = (id) => {
+    setNotifications((prev) => prev.filter(notification => notification.id !== id));
+  };
+
   return (
     <div className="real-time-notification">
-      {notifications.map((notification, index) => (
-        <div key={index} className="notification-toast">
-          {notification}
+      {notifications.map((notification) => (
+        <div key={notification.id} className="notification-toast">
+          <span className="notification-message">{notification.message}</span>
+          <button 
+            className="dismiss-btn" 
+            onClick={() => dismissNotification(notification.id)}
+          >
+            ✕
+          </button>
         </div>
       ))}
     </div>
