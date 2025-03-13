@@ -19,22 +19,24 @@ const app = express();
 // Create HTTP server for Socket.IO
 const server = http.createServer(app);
 
-// Initialize Socket.IO
+// Configure CORS for both REST and Socket.IO
+app.use(cors({
+  origin: [ 'http://localhost:3000', CLIENT_URL ],
+  credentials: true
+}));
+
+// Configure Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: CLIENT_URL, // React frontend origin
-    methods: ['GET', 'POST'],
-    credentials: true,
-  },
+    origin: [ 'http://localhost:3000', CLIENT_URL ],
+    methods: ["GET", "POST"],
+    credentials: true
+  }
 });
 
 // Middleware
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({
-  origin: CLIENT_URL,
-  credentials: true
-}));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
@@ -124,17 +126,24 @@ cron.schedule('0 9 * * *', async () => {
   }
 });
 
-//Real-time notifications
+// Socket.IO connection handling
 io.on('connection', (socket) => {
   console.log('New client connected');
-  io.emit("notification", "Hope you have a great day!");
 
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   });
+
+  // Add error handling
+  socket.on('error', (error) => {
+    console.error('Socket error:', error);
+  });
 });
 
+// Make io accessible to your routes
+app.set('io', io);
+
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
