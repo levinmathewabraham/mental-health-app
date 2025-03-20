@@ -4,6 +4,11 @@ import Navbar from './Navbar';
 import './DepressionPrediction.css';
 import { useNavigate } from 'react-router-dom';
 
+const API_BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://mental-health-app-hwsv.onrender.com"
+    : "http://127.0.0.1:5000";
+
 const DepressionPrediction = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -176,7 +181,7 @@ const DepressionPrediction = () => {
     };
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/predict', formattedData);
+      const response = await axios.post(`${API_BASE_URL}/predict`, formattedData);
       console.log('Response:', response.data); // Add this for debugging
       setPrediction(response.data.DepressionRisk);
       // Generate personalized recommendations based on form data

@@ -52,10 +52,15 @@ app.get('/', (req, res) => {
   res.send('Server connected successfully!');
 });
 
+const FLASK_API_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://mental-health-app-hwsv.onrender.com"
+    : "http://127.0.0.1:5000";
+
 // Predict Route
 app.post('/predict', async (req, res) => {
   try {
-    const response = await axios.post('http://127.0.0.1:8000/predict', req.body);
+    const response = await axios.post(`${FLASK_API_URL}/predict`, req.body);
     res.send(response.data);
   } catch (error) {
     res.status(500).send(error.message);
