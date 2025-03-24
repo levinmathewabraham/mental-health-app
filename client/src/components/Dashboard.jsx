@@ -482,7 +482,12 @@ function Dashboard() {
   };
 
   if (isLoading) {
-    return <div className="loading">Loading...</div>;
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Getting your wellness data...</p>
+      </div>
+    );
   }
 
   return (
