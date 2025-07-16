@@ -125,7 +125,7 @@ cron.schedule('0 9 * * *', async () => {
         const testEmail = `
 Hi ${user.username},
 
-This is a test email for my main project called MoodSync. It is a web-based application designed to help students monitor and improve their mental well-being.
+This is an automated test email for my main project called MoodSync. It is a web-based application designed to help students monitor and improve their mental well-being.
 
 NO ACTION IS REQUIRED FROM YOUR SIDE. 
 
@@ -133,8 +133,8 @@ If this email was sent to you by mistake, or if you are not familiar with this s
 
 Thank you for your understanding.
 
-- Levin Mathew Abraham
-BCA (2022 - 2025)
+Regards,
+Levin Mathew Abraham.
         `;
 
         await sendNotificationEmail(user.email, testEmail);
